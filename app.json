@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "BSafe",
+    "slug": "BSafe",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/bsafe.png",
+    "splash": {
+      "image": "./assets/load.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      },
+      "bundleIdentifier": "com.Ampersand.BSafe"
+    },
+    "android": {
+      "package": "com.Ampersand.BSafe",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "API_KEY"
+        }
+      }
+    },
+    "packagerOpts": {
+      "assetExts": [
+        "ttf"
+      ]
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  }
+}
