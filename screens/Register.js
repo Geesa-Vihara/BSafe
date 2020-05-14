@@ -44,7 +44,13 @@ class Register extends React.Component {
         console.log(token);
         await AsyncStorage.setItem("expoPushToken",token);
         await Location.startLocationUpdatesAsync('updateLoc', {
-          accuracy: Location.Accuracy.BestForNavigation
+          accuracy: Location.Accuracy.BestForNavigation,
+          timeInterval:30000,
+          foregroundService: { 
+            notificationTitle: 'GPS',
+            notificationBody: ' enabled',
+            notificationColor: '#FF7F27' 
+          }
           });        
         console.log("res"+res);
     }

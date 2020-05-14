@@ -19,9 +19,10 @@ const { width, height } = Dimensions.get('screen');
 
 import Firebase from "../config/firebase"
 import { login, getAuthState, signInGoogle } from "../actions/auth.js";
+import PushNotification from 'react-native-push-notification'
 
-import { Notifications } from 'expo';
-import { Audio } from 'expo-av';
+//import { Notifications } from 'expo';
+//import { Audio } from 'expo-av';
 
 /* Audio.setAudioModeAsync({
   staysActiveInBackground:true,
@@ -40,8 +41,53 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    notification: {},
-    expoPushToken: '',
+    //notification: {},
+    //expoPushToken: '',
+  }
+
+  static geoNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Be Aware!",
+      message: "People nearby, make sure to keep your distance!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'beaware.mp3'
+    });
+   
+  }
+
+  static homeNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Welcome Home!",
+      message: "Remember to wash your hands before you see your loved ones!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'handsfemale.mp3'
+    });
+   
+  }
+
+  static homeLeftNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Going Outside!",
+      message: "Remember to wear a mask!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'maskfemale.mp3'
+    });
+   
   }
 
   handleChange = (name, value) => {
@@ -57,10 +103,10 @@ class Login extends React.Component {
     console.log('state',this.state);
     var status=false;
     status=await login(this.state);
-    const token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
-    this.setState({ expoPushToken: token });
-    await AsyncStorage.setItem("expoPushToken",token);
+    //const token = await Notifications.getExpoPushTokenAsync();
+    //console.log(token);
+    //this.setState({ expoPushToken: token });
+    //await AsyncStorage.setItem("expoPushToken",token);
     if(status){ 
       /* await Location.startLocationUpdatesAsync('updateLoc', {
         accuracy: Location.Accuracy.High,
@@ -71,7 +117,13 @@ class Login extends React.Component {
         activityType: Location.ActivityType.Fitness
       }); */
       await Location.startLocationUpdatesAsync('updateLoc', {
-        accuracy: Location.Accuracy.BestForNavigation
+        accuracy: Location.Accuracy.BestForNavigation,
+        timeInterval:30000,
+        foregroundService: { 
+          notificationTitle: 'GPS',
+          notificationBody: ' enabled',
+          notificationColor: '#FF7F27' 
+        }
       });
       const uid=await AsyncStorage.getItem('uid');
       const doc=await db.collection('crowdcount').doc(uid).get();
@@ -87,7 +139,13 @@ class Login extends React.Component {
             await Location.startGeofencingAsync(place, [
               {
                 ...placeLng,
-                radius
+                radius,
+                foregroundService: { 
+                  notificationTitle: 'GPS',
+                  notificationBody: ' enabled',
+                  notificationColor: '#FF7F27' 
+                }
+
               }
             ]);
             console.log(place,placeLng);
@@ -104,7 +162,7 @@ class Login extends React.Component {
 
         if (user) {
           //await TaskManager.unregisterAllTasksAsync()       
-          this._notificationSubscription = Notifications.addListener(this._handleNotification);
+          //this._notificationSubscription = Notifications.addListener(this._handleNotification);
           const tasks=await TaskManager.getRegisteredTasksAsync();
           console.log("tasksCDM",JSON.stringify(tasks));
           this.setState({password:""})
@@ -117,7 +175,7 @@ class Login extends React.Component {
       console.log(error)
     }
 }
-
+/* 
 _handleNotification = async(notification) => {
   Vibration.vibrate();
   console.log(notification);
@@ -129,12 +187,12 @@ _handleNotification = async(notification) => {
     const {navigation}= this.props;
     navigation.navigate('PutMask');
   }
-};
+}; */
 
-static getExpoPushToken=async()=>{
+/* static getExpoPushToken=async()=>{
   var token=await AsyncStorage.getItem("expoPushToken"); 
   return token;
-}
+} */
 
   render() {
     const { navigation } = this.props;
@@ -402,12 +460,14 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
     "latitude":locations[0].coords.latitude,
     "longitude":locations[0].coords.longitude
   })
-  const token=await Login.getExpoPushToken()
+  //const token=await Login.getExpoPushToken()
   await db.collection('crowdcount').doc(uid).get().then(async(doc)=>{
     var data=doc.data();
-    console.log("doc"+JSON.stringify(data))    
-    if(data && data['count']>0){      
-      console.log("token"+JSON.stringify(token))
+    console.log("doc"+JSON.stringify(data));
+    
+    if(data && data['count']>0){
+      await Login.geoNotification();      
+      /* console.log("token"+JSON.stringify(token))
       const message = {
           to: token,
           sound: 'default',
@@ -424,7 +484,7 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(message),
-        }); 
+        });  
         try {
     
           let soundObject  = new Audio.Sound();
@@ -433,7 +493,7 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
     
       } catch (error) {
           alert("error"+error);
-      }
+      }*/
     }
   })
 }catch(error){
@@ -450,11 +510,12 @@ TaskManager.defineTask('home', async({ data: { eventType, region }, error }) => 
   try{
   console.log(eventType);
   
-  const token=await Login.getExpoPushToken()
-  console.log("token"+JSON.stringify(token))
+  //const token=await Login.getExpoPushToken()
+  //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered region:", region);
-    const message = {
+    await Login.homeNotification();  
+   /*  const message = {
       to: token,
       sound: 'default',
       title: 'Wecome Home!',
@@ -479,12 +540,13 @@ TaskManager.defineTask('home', async({ data: { eventType, region }, error }) => 
 
   } catch (error) {
       //console.log("error"+error);
-  }
+  } */
     
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left region:", region);
-    const message = {
+    await Login.homeLeftNotification();  
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Going Outside?',
@@ -509,7 +571,7 @@ TaskManager.defineTask('home', async({ data: { eventType, region }, error }) => 
 
   } catch (error) {
       //console.log("error"+error);
-  }
+  } */
   }
 }catch(error){
   alert("error"+error);
@@ -524,11 +586,11 @@ TaskManager.defineTask('school', async({ data: { eventType, region }, error }) =
   try{
   console.log(eventType);
   
-  const token=await Login.getExpoPushToken()
-  console.log("token"+JSON.stringify(token))
+  //const token=await Login.getExpoPushToken()
+  //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered school:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Wecome!',
@@ -553,12 +615,12 @@ TaskManager.defineTask('school', async({ data: { eventType, region }, error }) =
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
     
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left school:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Finished School?',
@@ -583,7 +645,7 @@ TaskManager.defineTask('school', async({ data: { eventType, region }, error }) =
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
   }
 }catch(error){
   alert("error"+error);
@@ -597,11 +659,11 @@ TaskManager.defineTask('university', async({ data: { eventType, region }, error 
   try{
   console.log(eventType);
   
-  const token=await Login.getExpoPushToken()
-  console.log("token"+JSON.stringify(token))
+  //const token=await Login.getExpoPushToken()
+  //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered university:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Wecome!',
@@ -626,12 +688,12 @@ TaskManager.defineTask('university', async({ data: { eventType, region }, error 
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
     
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left uni:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Finished Uni?',
@@ -656,7 +718,7 @@ TaskManager.defineTask('university', async({ data: { eventType, region }, error 
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
   }
 }catch(error){
   alert("error"+error);
@@ -670,11 +732,11 @@ TaskManager.defineTask('workplace', async({ data: { eventType, region }, error }
   try{
   console.log(eventType);
   
-  const token=await Login.getExpoPushToken()
-  console.log("token"+JSON.stringify(token))
+  //const token=await Login.getExpoPushToken()
+  //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered work:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Wecome!',
@@ -699,12 +761,12 @@ TaskManager.defineTask('workplace', async({ data: { eventType, region }, error }
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
     
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left work:", region);
-    const message = {
+    /* const message = {
       to: token,
       sound: 'default',
       title: 'Finished Work?',
@@ -729,7 +791,7 @@ TaskManager.defineTask('workplace', async({ data: { eventType, region }, error }
 
   } catch (error) {
       //console.log("error"+error);
-  } 
+  }  */
   }
 }catch(error){
   alert("error"+error);

@@ -80,6 +80,8 @@ export const signInGoogle = async function signInGoogle() {
 
 export const logout = async function logout() {
     try {
+        
+        await Location.stopLocationUpdatesAsync('updateLoc');
         const response = await Firebase.auth().signOut()
         const uid=await AsyncStorage.getItem('uid');
         const doc=await db.collection('crowdcount').doc(uid).get();
@@ -96,7 +98,6 @@ export const logout = async function logout() {
         }              
         await AsyncStorage.removeItem('uid');
         await AsyncStorage.removeItem('expoPushToken');
-        await Location.stopLocationUpdatesAsync('updateLoc');
         return true
     } catch (error) {
         console.log('errortyty',error);
