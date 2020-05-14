@@ -19,8 +19,9 @@ import moment from 'moment';
 import { Button, Icon, Input } from '../components';
 import { Images, nowTheme } from '../constants';
 import { setMealTimes, getMealTimes } from "../actions/database.js";
-import { Notifications } from 'expo';
-import { Audio } from 'expo-av';
+/* import { Notifications } from 'expo';
+import { Audio } from 'expo-av'; */
+import PushNotification from 'react-native-push-notification'
 
 const { width, height } = Dimensions.get('screen');
 
@@ -37,16 +38,20 @@ const DismissKeyboard = ({ children }) => (
   playsInSilentModeIOS: true,
 }); */
 class MealTimePicker extends React.Component {
-  
-  state = {
-    breakfastHour: 0,
-    breakfastMinutes: 0,
-    lunchHour: 0,
-    lunchMinutes: 0,
-    dinnerHour: 0,
-    dinnerMinutes: 0,
-    notification:{}
-  }
+  constructor(props){
+    super(props);
+    this.state = {
+      breakfastHour: 0,
+      breakfastMinutes: 0,
+      lunchHour: 0,
+      lunchMinutes: 0,
+      dinnerHour: 0,
+      dinnerMinutes: 0,
+      notification:{}
+      
+    }
+    this.handleNotification = this.handleNotification.bind(this);
+}
 
   successAlert = () =>
   Alert.alert(
@@ -62,6 +67,12 @@ class MealTimePicker extends React.Component {
     this.setState({ [hours]: h, [minutes]: m });
     console.log(this.state)
   }
+
+  handleNotification=(notification)=>{
+    console.log('LOCAL NOTIFICATION ==>', notification);
+    this.props.navigation.navigate('HandWash');    
+  };
+
   async componentDidMount() {
     try {
       const mealTimes = await getMealTimes();
@@ -81,15 +92,24 @@ class MealTimePicker extends React.Component {
         })
       }
       console.log(this.state); 
+      var that = this;
+      PushNotification.configure({
+        // (required) Called when a remote or local notification is opened or received
+        onNotification: function(notification) {
+          that.handleNotification(notification);
+      
+        },popInitialNotification: true,
+        requestPermissions: true
+      })
 
     } catch (error) {
       console.log(error)
     }
 
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    //this._notificationSubscription = Notifications.addListener(this._handleNotification);
   }
   
-  _handleNotification = async(notification) => {
+  /* _handleNotification = async(notification) => {
     Vibration.vibrate();  
     console.log(notification);
     this.setState({ notification: notification });
@@ -132,7 +152,56 @@ class MealTimePicker extends React.Component {
       const {navigation}= this.props;
       navigation.navigate('HandWash');
   };
-}
+} */
+  LocalBNotification = (time) => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+          "It's breakfast time!",
+      message: 'Make sure to wash your hands before you eat your breakfast!',
+      date: time,
+      repeatType: 'time',
+      repeatTime: 86400000,
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'breakfast.mp3'
+    });
+  }
+
+  LocalLNotification = (time) => {
+      
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "It's lunch time!",
+      message: "Make sure to wash your hands before you eat your lunch!",
+      date: time,
+      repeatType: 'time',
+      repeatTime:  86400000,
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'lunch.mp3',
+    });
+    }
+
+    LocalDNotification = (time) => {
+    
+      PushNotification.localNotificationSchedule({
+        //... You can use all the options from localNotifications
+        bigText:
+        "It's dinner time!",
+        message: "Make sure to wash your hands before you eat your dinner!",
+        date: time,
+        repeatType: 'time',
+        repeatTime: 86400000,
+        vibrate: true,
+        vibration: 300,
+        playSound: true,
+        soundName: 'dinner.mp3',
+      });
+      }
 
   handleSubmit = () => {
     this.successAlert();
@@ -157,8 +226,7 @@ class MealTimePicker extends React.Component {
     //const breakfast = moment.utc(b, [moment.ISO_8601, 'HH:mm']);
     //console.log(moment({hour:this.state.breakfastHour, minute:this.state.breakfastMinutes}))
     console.log(breakfast,lunch,dinner);
-    console.log((new Date(breakfast)).getTime(),(new Date(lunch)).getTime(),(new Date(dinner)).getTime());
-    const localNotificationb={
+   /*  const localNotificationb={
       title:"It's breakfast time!",
       body:"Make sure to wash your hands before you eat your breakfast!",
       data: { data: 'breakfast' },
@@ -184,10 +252,21 @@ class MealTimePicker extends React.Component {
     const schedulingOptionsd={
       time:(new Date(dinner)).getTime(),
       repeat:'day'
-    };
-    Notifications.scheduleLocalNotificationAsync(localNotificationb, schedulingOptionsb);
+    }; */
+    
+    console.log("cl",(new Date(breakfast)).getTime(),(new Date(lunch)).getTime(),(new Date(dinner)).getTime());
+    const btime=(new Date(breakfast));
+    const ltime=(new Date(lunch));
+    const dtime=(new Date(dinner));
+    this.LocalBNotification(btime);
+    this.LocalLNotification(ltime);
+    this.LocalDNotification(dtime);
+    /* 
+    LocalLNotification((new Date(lunch)).getTime());
+    LocalDNotification((new Date(dinner)).getTime()); */
+    /* Notifications.scheduleLocalNotificationAsync(localNotificationb, schedulingOptionsb);
     Notifications.scheduleLocalNotificationAsync(localNotificationl, schedulingOptionsl);
-    Notifications.scheduleLocalNotificationAsync(localNotificationd, schedulingOptionsd);
+    Notifications.scheduleLocalNotificationAsync(localNotificationd, schedulingOptionsd); */
   }
 
   render() {
