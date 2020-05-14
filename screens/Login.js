@@ -90,6 +90,96 @@ class Login extends React.Component {
    
   }
 
+  static schoolNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Welcome!",
+      message: "Remember to wash your hands before you see your friends!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'schoolhands.mp3'
+    });
+   
+  }
+
+  static schoolLeftNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Finished School!",
+      message: "Remember to wear a mask!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'schoolmask.mp3'
+    });
+   
+  }
+
+  static uniNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Welcome!",
+      message: "Remember to wash your hands before you see your maties!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'unihands.mp3'
+    });
+   
+  }
+
+  static uniLeftNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Finished Uni!",
+      message: "Remember to wear a mask!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'unimask.mp3'
+    });
+   
+  }
+
+  static workNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Welcome!",
+      message: "Remember to wash your hands before your work begins!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'workhands.mp3'
+    });
+   
+  }
+
+  static workLeftNotification = async() => {  
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      bigText:
+      "Finished Work!",
+      message: "Remember to wear a mask!", // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'workmask.mp3'
+    });
+   
+  }
+
   handleChange = (name, value) => {
     this.setState({ [name]: value });
   }
@@ -590,6 +680,7 @@ TaskManager.defineTask('school', async({ data: { eventType, region }, error }) =
   //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered school:", region);
+    await Login.schoolNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
@@ -620,6 +711,7 @@ TaskManager.defineTask('school', async({ data: { eventType, region }, error }) =
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left school:", region);
+    await Login.schoolLeftNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
@@ -663,6 +755,7 @@ TaskManager.defineTask('university', async({ data: { eventType, region }, error 
   //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered university:", region);
+    await Login.uniNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
@@ -693,6 +786,7 @@ TaskManager.defineTask('university', async({ data: { eventType, region }, error 
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left uni:", region);
+    await Login.uniLeftNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
@@ -736,6 +830,7 @@ TaskManager.defineTask('workplace', async({ data: { eventType, region }, error }
   //console.log("token"+JSON.stringify(token))
   if (eventType === Location.GeofencingEventType.Enter) {    
     console.log("You've entered work:", region);
+    await Login.workNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
@@ -766,6 +861,7 @@ TaskManager.defineTask('workplace', async({ data: { eventType, region }, error }
     
   } else if (eventType === Location.GeofencingEventType.Exit) {
     console.log("You've left work:", region);
+    await Login.workLeftNotification(); 
     /* const message = {
       to: token,
       sound: 'default',
