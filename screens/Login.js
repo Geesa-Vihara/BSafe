@@ -38,12 +38,26 @@ const DismissKeyboard = ({ children }) => (
 );
 
 class Login extends React.Component {
-  state = {
+  constructor(props){
+    super(props);
+    this.state = {
     email: '',
     password: '',
     //notification: {},
     //expoPushToken: '',
   }
+  this.handleNotification = this.handleNotification.bind(this);
+
+}
+
+handleNotification=(notification)=>{
+  console.log('LOCAL NOTIFICATION ==>', notification);
+  if(notification.bigText=="Welcome Home!"||notification.bigText=="Welcome!"){    
+    this.props.navigation.navigate('HandWash');  
+  }else if(notification.bigText=="Going Outside!"||notification.bigText=="Finished School!"||notification.bigText=="Finished Uni!"||notification.bigText=="Finished Work!"){
+    this.props.navigation.navigate('PutMask');
+  }  
+};
 
   static geoNotification = async() => {  
     PushNotification.localNotificationSchedule({
@@ -230,11 +244,11 @@ class Login extends React.Component {
               {
                 ...placeLng,
                 radius,
-                foregroundService: { 
+               /*  foregroundService: { 
                   notificationTitle: 'GPS',
                   notificationBody: ' enabled',
                   notificationColor: '#FF7F27' 
-                }
+                } */
 
               }
             ]);
@@ -259,6 +273,15 @@ class Login extends React.Component {
           console.log(this.state)
           this.props.navigation.navigate('App');
         }
+      })
+      var that = this;
+      PushNotification.configure({
+        // (required) Called when a remote or local notification is opened or received
+        onNotification: function(notification) {
+          that.handleNotification(notification);
+      
+        },popInitialNotification: true,
+        requestPermissions: true
       })
 
     } catch (error) {
