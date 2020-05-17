@@ -203,7 +203,11 @@ class MealTimePicker extends React.Component {
       });
       }
 
-  handleSubmit = () => {
+  stopAllMealNotifications=async()=>{
+    PushNotification.cancelAllLocalNotifications();
+  }
+
+  handleSubmit = async() => {
     this.successAlert();
     // const breakfast = this.state.breakfastHour + ':' + this.state.breakfastMinutes;
     // const lunch = this.state.lunchHour + ':' + this.state.lunchMinutes;
@@ -253,7 +257,8 @@ class MealTimePicker extends React.Component {
       time:(new Date(dinner)).getTime(),
       repeat:'day'
     }; */
-    
+    await this.stopAllMealNotifications();
+    console.log("stopped")
     console.log("cl",(new Date(breakfast)).getTime(),(new Date(lunch)).getTime(),(new Date(dinner)).getTime());
     const btime=(new Date(breakfast));
     const ltime=(new Date(lunch));
@@ -261,6 +266,7 @@ class MealTimePicker extends React.Component {
     this.LocalBNotification(btime);
     this.LocalLNotification(ltime);
     this.LocalDNotification(dtime);
+    console.log("added")
     /* 
     LocalLNotification((new Date(lunch)).getTime());
     LocalDNotification((new Date(dinner)).getTime()); */
