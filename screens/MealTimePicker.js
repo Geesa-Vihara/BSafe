@@ -93,14 +93,14 @@ class MealTimePicker extends React.Component {
       }
       console.log(this.state); 
       var that = this;
-      PushNotification.configure({
+      /* PushNotification.configure({
         // (required) Called when a remote or local notification is opened or received
         onNotification: function(notification) {
           that.handleNotification(notification);
       
         },popInitialNotification: true,
         requestPermissions: true
-      })
+      }) */
 
     } catch (error) {
       console.log(error)
@@ -158,7 +158,7 @@ class MealTimePicker extends React.Component {
       //... You can use all the options from localNotifications
       bigText:
           "It's breakfast time!",
-      message: 'Make sure to wash your hands before you eat your breakfast!',
+      message: 'Make sure to wash your hands before having your meal to stop contamination!',
       date: time,
       repeatType: 'time',
       repeatTime: 86400000,
@@ -175,7 +175,7 @@ class MealTimePicker extends React.Component {
       //... You can use all the options from localNotifications
       bigText:
       "It's lunch time!",
-      message: "Make sure to wash your hands before you eat your lunch!",
+      message: "Make sure to wash your hands before having your meal to stop contamination!",
       date: time,
       repeatType: 'time',
       repeatTime:  86400000,
@@ -192,7 +192,7 @@ class MealTimePicker extends React.Component {
         //... You can use all the options from localNotifications
         bigText:
         "It's dinner time!",
-        message: "Make sure to wash your hands before you eat your dinner!",
+        message: "Make sure to wash your hands before having your meal to stop contamination!",
         date: time,
         repeatType: 'time',
         repeatTime: 86400000,

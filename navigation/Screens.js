@@ -26,6 +26,7 @@ import putMask from '../screens/putMask';
 import MealTimePicker from '../screens/MealTimePicker'
 import Visits from '../screens/Visits';
 import Global from '../screens/Global';
+import ShareApp from '../screens/ShareApp';
 
 const { width } = Dimensions.get("screen");
 
@@ -129,6 +130,48 @@ function ProfileStack(props) {
     </Stack.Navigator>
   );
 }
+
+function ShareAppStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="ShareApp" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="ShareApp"
+        component={ShareApp}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              transparent
+              white
+              title="ShareApp"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 
 function handWashStack(props) {
   return (
@@ -420,6 +463,7 @@ function AppStack(props) {
       <Drawer.Screen name="HandWash" component={handWashStack} />      
       <Drawer.Screen name="PutMask" component={putMaskStack} />
       <Drawer.Screen name="Meal TimePicker" component={MealTimeStack} />
+      <Drawer.Screen name="Share App" component={ShareAppStack} />
       {/* <Drawer.Screen name="Components" component={ComponentsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />

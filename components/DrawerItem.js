@@ -142,6 +142,16 @@ class DrawerItem extends React.Component {
             color={focused ? nowTheme.COLORS.PRIMARY : "white"}
           />
         );
+        case "Share App":
+          return (
+            <Icon
+              name="album"
+              family="NowExtra"
+              size={18}
+              color={focused ? nowTheme.COLORS.PRIMARY : "white"}
+              style={{ opacity: 0.5 }}
+            />
+          );
       default:
         return null;
     }

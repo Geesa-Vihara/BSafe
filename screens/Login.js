@@ -52,7 +52,7 @@ class Login extends React.Component {
 
 handleNotification=(notification)=>{
   console.log('LOCAL NOTIFICATION ==>', notification);
-  if(notification.bigText=="Welcome Home!"||notification.bigText=="Welcome!"){    
+  if(notification.bigText=="Welcome Home!"||notification.bigText=="Welcome!"||notification.bigText=="It's breakfast time!"||notification.bigText=="It's lunch time!"||notification.bigText=="It's dinner time!"){    
     this.props.navigation.navigate('HandWash');  
   }else if(notification.bigText=="Going Outside!"||notification.bigText=="Finished School!"||notification.bigText=="Finished Uni!"||notification.bigText=="Finished Work!"){
     this.props.navigation.navigate('PutMask');
@@ -64,7 +64,7 @@ handleNotification=(notification)=>{
       //... You can use all the options from localNotifications
       bigText:
       "Be Aware!",
-      message: "People nearby, make sure to keep your distance!", // (required)
+      message: "You are in a crowded place, make sure to keep your distance!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
       vibrate: true,
       vibration: 300,
