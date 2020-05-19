@@ -37,7 +37,7 @@ const ShareApp = () => {
       flexDirection: 'column',
       justifyContent: 'space-between',
     }} >
-      <Block flex={0.6} >
+      <Block flex={0.4} >
         <ImageBackground
           source={Images.ProfileBackground}
           style={styles.profileContainer}
@@ -45,10 +45,10 @@ const ShareApp = () => {
         >
           <Block flex style={styles.profileCard}>
             <Block style={{ position: 'absolute', width: width, zIndex: 5, paddingHorizontal: 20 }}>
-              <Block middle style={{ top: height * 0.15 }}>
+              <Block middle style={{ top: height * 0.1 }}>
                 <Image source={Images.ProfilePicture} style={styles.avatar} />
               </Block>
-              <Block style={{ top: height * 0.2 }}>
+              <Block style={{ top: height * 0.1 }}>
                 <Block middle >
                   <Text
                     style={{
@@ -130,7 +130,7 @@ const ShareApp = () => {
             <Block
               middle
               row
-              style={{ position: 'absolute', width: width, top: height * 0.6 - 22, zIndex: 99 }}
+              style={{ position: 'absolute', width: width, top: height * 0.4 - 22, zIndex: 99 }}
             >
               <Button style={{ width: 114, height: 44, marginHorizontal: 5, elevation: 0 }} textStyle={{ fontSize: 16 }} round onPress={shareButton}>
                 Share 
@@ -164,7 +164,7 @@ const ShareApp = () => {
 
       </Block>
       <Block />
-      <Block flex={0.4} style={{ padding: theme.SIZES.BASE, marginTop: 90}}>
+      <Block flex={0.5} style={{ padding: theme.SIZES.BASE, marginTop: 10}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Block flex style={{ marginTop: 20 }}>
             <Block middle>
@@ -193,7 +193,7 @@ const ShareApp = () => {
                   paddingHorizontal: 15
                 }}
               >
-                Three undergraduates working their best to make this country safe again. Share this app and be a part of this incredible journey with us...
+                Three undergraduates working their best to make this country safe again. Share this app and be a part of this journey with us...
                   </Text>
             </Block>
            {/*  <Block row style={{ paddingVertical: 14, paddingHorizontal: 15 }} space="between">
@@ -241,11 +241,11 @@ const styles = StyleSheet.create({
     height,
     padding: 0,
     zIndex: 1,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   profileBackground: {
     width,
-    height: height * 0.6
+    height: height * 0.4
   },
 
   info: {

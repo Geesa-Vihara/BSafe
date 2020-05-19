@@ -133,22 +133,19 @@ function ProfileStack(props) {
 
 function ShareAppStack(props) {
   return (
-    <Stack.Navigator initialRouteName="ShareApp" mode="card" headerMode="screen">
+    <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
-        name="ShareApp"
+        name="Share App"
         component={ShareApp}
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              transparent
-              white
-              title="ShareApp"
+              title="Share the app with your friends"
               navigation={navigation}
               scene={scene}
             />
           ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
+          cardStyle: { backgroundColor: "#FFFFFF" }
         }}
       />
       <Stack.Screen
