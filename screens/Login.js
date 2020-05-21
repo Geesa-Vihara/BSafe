@@ -7,7 +7,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   AsyncStorage,
-  Vibration
+  Vibration,
+  Alert
 } from 'react-native';
 import { Block, Checkbox, Text, Button as GaButton, theme } from 'galio-framework';
 import * as TaskManager from 'expo-task-manager';
@@ -62,7 +63,7 @@ handleNotification=(notification)=>{
   static geoNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Be Aware!",
       message: "You are in a crowded place, make sure to keep your distance!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -77,7 +78,7 @@ handleNotification=(notification)=>{
   static homeNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Welcome Home!",
       message: "Remember to wash your hands before you see your loved ones!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -92,7 +93,7 @@ handleNotification=(notification)=>{
   static homeLeftNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Going Outside!",
       message: "Remember to wear a mask!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -104,10 +105,31 @@ handleNotification=(notification)=>{
    
   }
 
+  static districtNotification = async(dist) => {  
+    const doc=await db.collection('districtWise').where("district", "==", `${dist}`).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            console.log(doc.id, " => ", doc.data());
+            const data=doc.data();           
+            PushNotification.localNotificationSchedule({
+              //... You can use all the options from localNotifications
+              title:
+              `Welcome to ${dist} District!`,
+              message: data.cases==0?"No cases reported here, but stay on alert":data.cases!=1?`${data.cases} covid-19 cases reported in ${data.district}, be cautious `:`${data.cases} covid-19 case reported in ${data.district}, be cautious `, // (required)
+              date: new Date(Date.now() + 1 * 1000), // in 60 secs
+              vibrate: true,
+              vibration: 300,
+            }); 
+        });
+      })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });    
+  }
+
   static schoolNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Welcome!",
       message: "Remember to wash your hands before you see your friends!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -122,7 +144,7 @@ handleNotification=(notification)=>{
   static schoolLeftNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Finished School!",
       message: "Remember to wear a mask!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -137,7 +159,7 @@ handleNotification=(notification)=>{
   static uniNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Welcome!",
       message: "Remember to wash your hands before you see your maties!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -152,7 +174,7 @@ handleNotification=(notification)=>{
   static uniLeftNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Finished Uni!",
       message: "Remember to wear a mask!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -167,7 +189,7 @@ handleNotification=(notification)=>{
   static workNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Welcome!",
       message: "Remember to wash your hands before your work begins!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -182,7 +204,7 @@ handleNotification=(notification)=>{
   static workLeftNotification = async() => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "Finished Work!",
       message: "Remember to wear a mask!", // (required)
       date: new Date(Date.now() + 1 * 1000), // in 60 secs
@@ -232,7 +254,7 @@ handleNotification=(notification)=>{
       const uid=await AsyncStorage.getItem('uid');
       const doc=await db.collection('crowdcount').doc(uid).get();
       const data=doc.data();          
-      const radius = 50;
+      var radius = 50;
       if(data.places){
         Object.keys(data.places).map(async(place,index) => { 
           const base=data.places;
@@ -255,6 +277,19 @@ handleNotification=(notification)=>{
             console.log(place,placeLng);
         })
       }
+      const placeLng={
+        latitude:6.927079,
+        longitude:79.861244,
+      }
+      radius=10000;
+      await Location.startGeofencingAsync("Colombo", [
+        {
+          ...placeLng,
+          radius,
+        }
+      ]);
+
+
       const tasks=await TaskManager.getRegisteredTasksAsync();
       console.log("tasksOS",JSON.stringify(tasks));
       this.props.navigation.navigate('App');
@@ -614,6 +649,42 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
 }
   
 });
+
+TaskManager.defineTask('Colombo', async({ data: { eventType, region }, error }) => {
+  if (error) {
+    // check `error.message` for more details.
+    return;
+  }
+  try{
+  console.log(eventType);
+  if (eventType === Location.GeofencingEventType.Enter) {    
+    console.log("You've entered Colombo:", region);
+    await Login.districtNotification("Colombo");      
+    
+  }
+}catch(error){
+  alert("error"+error);
+}
+});
+
+TaskManager.defineTask('Ampara', async({ data: { eventType, region }, error }) => {
+  if (error) {
+    // check `error.message` for more details.
+    return;
+  }
+  try{
+  console.log(eventType);
+  if (eventType === Location.GeofencingEventType.Enter) {    
+    console.log("You've entered Ampara:", region);
+    await Login.districtNotification("Ampara");      
+    
+  }
+}catch(error){
+  alert("error"+error);
+}
+});
+
+
 
 TaskManager.defineTask('home', async({ data: { eventType, region }, error }) => {
   if (error) {

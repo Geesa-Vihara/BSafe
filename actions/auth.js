@@ -95,7 +95,8 @@ export const logout = async function logout() {
                     
                        
             })  
-        }              
+        }     
+        await Location.stopGeofencingAsync("Colombo");         
         await AsyncStorage.removeItem('uid');
         await AsyncStorage.removeItem('expoPushToken');
         return true

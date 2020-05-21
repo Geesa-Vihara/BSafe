@@ -156,7 +156,7 @@ class MealTimePicker extends React.Component {
   LocalBNotification = (time) => {  
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
           "It's breakfast time!",
       message: 'Make sure to wash your hands before having your meal to stop contamination!',
       date: time,
@@ -173,7 +173,7 @@ class MealTimePicker extends React.Component {
       
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      bigText:
+      title:
       "It's lunch time!",
       message: "Make sure to wash your hands before having your meal to stop contamination!",
       date: time,
@@ -190,7 +190,7 @@ class MealTimePicker extends React.Component {
     
       PushNotification.localNotificationSchedule({
         //... You can use all the options from localNotifications
-        bigText:
+        title:
         "It's dinner time!",
         message: "Make sure to wash your hands before having your meal to stop contamination!",
         date: time,
