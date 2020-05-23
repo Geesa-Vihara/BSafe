@@ -19,10 +19,11 @@ export const signUp = async function signUp(data) {
                 userId:response.user.uid,
                 count:0,
             }
+            var breakfast = moment({hour:this.state.breakfastHour, minute:this.state.breakfastMinutes}).toISOString();
             const mealTimes = {
-                breakfast : 0,
-                lunch : 0,
-                dinner : 0,
+                breakfast : moment({hour:8, minute:30}).toISOString(),
+                lunch : moment({hour:13, minute:30}).toISOString(),
+                dinner : moment({hour:20, minute:0}).toISOString(),
             }
             await db.collection('users').doc(response.user.uid).set(user);
             await db.collection('crowdcount').doc(response.user.uid).set(crowdcount);

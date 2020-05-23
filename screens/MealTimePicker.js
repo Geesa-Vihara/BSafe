@@ -56,7 +56,7 @@ class MealTimePicker extends React.Component {
   successAlert = () =>
   Alert.alert(
     "Pick Your Meal Times",
-    "Your meal times submitted successfully!",
+    "Your meal times submitted successfully! You will get a reminder to wash your hands at your meal times.",
     [
       { text: "OK", onPress: () => console.log("OK Pressed") }
     ],
@@ -310,7 +310,7 @@ class MealTimePicker extends React.Component {
                       muted
                       size={14}
                     >
-                      Set the time you have your main meals
+                      Set the time you have your main meals to get reminders to wash your hands.
                     </Text>
                   </Block>
                   <SafeAreaView style={{flex:1}}>
