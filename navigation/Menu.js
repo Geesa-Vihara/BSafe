@@ -32,8 +32,9 @@ function CustomDrawerContent({
     //"Articles",
     //"Profile",
     //"Account",
-    "Map",
-    "Your Places"
+    "Map",    
+    "Your Places",
+    "Share App"
   ];
   return (
     <Block
