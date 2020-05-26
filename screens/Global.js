@@ -101,16 +101,16 @@ class Global extends React.Component {
 
   
     console.log("global total cases = "+data.data.global_total_cases);
+
    
 
       this.setState({
-        local_total_cases: data.data.local_total_cases,
-        global_total_cases: data.data.global_total_cases,
-        global_deaths : data.data.global_deaths,
-        global_new_cases : data.data.global_new_cases,
-        global_recovered : data.data.global_recovered,
-        global_new_deaths : data.data.global_new_deaths,
-        total_pcr_testing_count: data.data.total_pcr_testing_count,
+        global_total_cases: this.thousands_separators(data.data.global_total_cases),
+        global_deaths : this.thousands_separators(data.data.global_deaths),
+        global_new_cases : this.thousands_separators(data.data.global_new_cases),
+        global_recovered : this.thousands_separators(data.data.global_recovered),
+        global_new_deaths : this.thousands_separators(data.data.global_new_deaths),
+        total_pcr_testing_count: this.thousands_separators(data.data.total_pcr_testing_count),
         isLoading: false,
         
         });
@@ -124,6 +124,13 @@ class Global extends React.Component {
     console.log("app test")
   
     this.newsFetch();
+  }
+
+   thousands_separators(num)
+  {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
   }
 
 
