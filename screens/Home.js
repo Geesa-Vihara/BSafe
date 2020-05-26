@@ -96,13 +96,13 @@ class Home extends React.Component {
     console.log("local recovered cases = "+data.data.local_recovered);
 
       this.setState({
-        local_total_cases: data.data.local_total_cases,
-        global_total_cases: data.data.global_total_cases,
-        local_deaths : data.data.local_deaths,
-        local_new_cases : data.data.local_new_cases,
-        local_recovered : data.data.local_recovered,
-        local_active_cases : data.data.local_active_cases,
-        local_total_number_of_individuals_in_hospitals : data.data.local_total_number_of_individuals_in_hospitals,
+        local_total_cases: this.thousands_separators(data.data.local_total_cases),
+        global_total_cases: this.thousands_separators(data.data.global_total_cases),
+        local_deaths : this.thousands_separators(data.data.local_deaths),
+        local_new_cases : this.thousands_separators(data.data.local_new_cases),
+        local_recovered : this.thousands_separators(data.data.local_recovered),
+        local_active_cases : this.thousands_separators(data.data.local_active_cases),
+        local_total_number_of_individuals_in_hospitals : this.thousands_separators(data.data.local_total_number_of_individuals_in_hospitals),
         isLoading: false,
         
         });
@@ -116,6 +116,13 @@ class Home extends React.Component {
     console.log("app test")
   
     this.newsFetch();
+  }
+
+  thousands_separators(num)
+  {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
   }
 
 
