@@ -6,7 +6,8 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 import { Block, Checkbox, Text, Button as GaButton, theme } from 'galio-framework';
 
@@ -90,7 +91,8 @@ class Register extends React.Component {
                     </Block>
 
                     <Block flex={0.5} row middle space="between" style={{ marginBottom: 18 }}>
-                      <GaButton
+                      <Image source = {require('../assets/bsafe.png')} style = {{ width: 80, height: 80 }}/>
+                      {/* <GaButton
                         round
                         onlyIcon
                         shadowless
@@ -123,7 +125,7 @@ class Register extends React.Component {
                         iconSize={theme.SIZES.BASE * 1.625}
                         color={nowTheme.COLORS.FACEBOOK}
                         style={[styles.social, styles.shadow]}
-                      />
+                      /> */}
                     </Block>
                   </Block>
                   <Block flex={0.1} middle>
@@ -135,7 +137,7 @@ class Register extends React.Component {
                       muted
                       size={16}
                     >
-                      or be classical
+                      BSafe
                     </Text>
                   </Block>
                   <Block flex={1} middle space="between">
