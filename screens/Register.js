@@ -83,10 +83,10 @@ class Register extends React.Component {
                           fontFamily: 'montserrat-regular',
                           textAlign: 'center'
                         }}
-                        color="#333"
+                        color="#FF7F27"
                         size={24}
                       >
-                        Register
+                        BSafe
                       </Text>
                     </Block>
 
@@ -137,7 +137,7 @@ class Register extends React.Component {
                       muted
                       size={16}
                     >
-                      BSafe
+                      Register
                     </Text>
                   </Block>
                   <Block flex={1} middle space="between">

@@ -364,10 +364,10 @@ _handleNotification = async(notification) => {
                           paddingTop: 10,
                           paddingBottom:20
                         }}
-                        color="#333"
+                        color="#FF7F27"
                         size={24}
                       >
-                        Login
+                        BSafe
                       </Text>
 
                     <Block flex={0.5} row middle space="between" style={{ marginTop:18, marginBottom: 28 }}>
@@ -418,7 +418,7 @@ _handleNotification = async(notification) => {
                       muted
                       size={16}
                     >
-                      BSafe
+                      Login
                     </Text>
                   </Block>
                   <Block flex={1} middle space="between">
