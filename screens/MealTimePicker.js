@@ -301,11 +301,12 @@ class MealTimePicker extends React.Component {
                       </Text>
                     </Block>
                   </Block>
-                  <Block flex={0.1}>
+                  <Block flex={0.2}>
                     <Text
                       style={{
                         fontFamily: 'montserrat-regular',
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        paddingHorizontal: 10
                       }}
                       muted
                       size={14}
