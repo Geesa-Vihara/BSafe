@@ -8,7 +8,8 @@ import {
   Keyboard,
   AsyncStorage,
   Vibration,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import { Block, Checkbox, Text, Button as GaButton, theme } from 'galio-framework';
 import * as TaskManager from 'expo-task-manager';
@@ -370,7 +371,8 @@ _handleNotification = async(notification) => {
                       </Text>
 
                     <Block flex={0.5} row middle space="between" style={{ marginTop:18, marginBottom: 28 }}>
-                      <GaButton
+                      <Image source = {require('../assets/bsafe.png')} style = {{ width: 80, height: 80 }}/>
+                      {/* <GaButton
                         round
                         onlyIcon
                         shadowless
@@ -404,7 +406,7 @@ _handleNotification = async(notification) => {
                         iconSize={theme.SIZES.BASE * 1.625}
                         color={nowTheme.COLORS.FACEBOOK}
                         style={[styles.social, styles.shadow]}
-                      />
+                      /> */}
                     </Block>
                   </Block>
                   <Block flex={0.1} middle>
@@ -416,7 +418,7 @@ _handleNotification = async(notification) => {
                       muted
                       size={16}
                     >
-                      or be classical
+                      BSafe
                     </Text>
                   </Block>
                   <Block flex={1} middle space="between">
