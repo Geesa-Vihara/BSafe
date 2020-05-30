@@ -76,6 +76,7 @@ function CustomDrawerContent({
           </Text> */}
         </Block>
         {/*<DrawerCustomItem title="GETTING STARTED" navigation={navigation}/>*/}
+        <DrawerCustomItem title="Help" navigation={navigation}/>
         <DrawerCustomItem title="LOGOUT" navigation={navigation}/>
         </ScrollView>
       </Block>

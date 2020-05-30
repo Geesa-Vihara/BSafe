@@ -152,6 +152,16 @@ class DrawerItem extends React.Component {
               style={{ opacity: 0.5 }}
             />
           );
+          case "Help":
+            return (
+              <Icon
+                name="atom2x"
+                family="NowExtra"
+                size={18}
+                color={focused ? nowTheme.COLORS.PRIMARY : "white"}
+                style={{ opacity: 0.5 }}
+              />
+            );
       default:
         return null;
     }
