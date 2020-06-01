@@ -115,7 +115,7 @@ handleNotification=(notification)=>{
               //... You can use all the options from localNotifications
               title:
               `Welcome to ${dist} District!`,
-              message: data.cases==0?"No cases reported here, but stay on alert":data.cases!=1?`${data.cases} covid-19 cases reported in ${data.district}, be cautious `:`${data.cases} covid-19 case reported in ${data.district}, be cautious `, // (required)
+              message: data.cases==0?"⚠️ No cases reported here, but stay on alert ":data.cases!=1?`🚨 ${data.cases} covid-19 cases reported in ${data.district}, be cautious `:`${data.cases} covid-19 case reported in ${data.district}, be cautious `, // (required)
               date: new Date(Date.now() + 1 * 1000), // in 60 secs
               vibrate: true,
               vibration: 300,
