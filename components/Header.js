@@ -8,6 +8,8 @@ import Input from './Input';
 import Tabs from './Tabs';
 import nowTheme from '../constants/Theme';
 
+var focused =1;
+
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () =>
   Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
@@ -124,37 +126,60 @@ class Header extends React.Component {
   };
   renderOptions = () => {
     const { navigation, optionLeft, optionRight } = this.props;
-
+    
+    const containerStyles1 = [
+      styles.defaultStyle,
+      focused==1? [styles.activeStyle, styles.shadow1] : styles.tab
+    ];
+    const containerStyles2 = [
+      styles.defaultStyle,
+      focused==2 ? [styles.activeStyle, styles.shadow1] : styles.tab
+    ];
+    const tabtitle1 = [
+      focused==1 ? [styles.selectedtab] : styles.tabTitle
+    ];
+    const tabtitle2 = [
+      focused==2 ? [styles.selectedtab] : styles.tabTitle
+    ];
     return (
       <Block row style={styles.options}>
         <Button
           shadowless
-          style={[styles.tab, styles.divider]}
-          onPress={() => navigation.navigate('Dashboard')}
+          style={containerStyles1}
+          //style={[styles.tab, styles.divider]}
+          onPress={() => {
+            focused=1
+            navigation.navigate('Dashboard');
+            
+          }}
         >
           <Block row middle>
             <Icon
               name="single"
               family="NowExtra"
               size={18}
-              style={{ paddingRight: 8 }}
+              style={tabtitle1}
               color={nowTheme.COLORS.HEADER}
             />
-            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={tabtitle1}>
               {optionLeft || 'Local'}
             </Text>
           </Block>
         </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Global')}>
+        <Button shadowless /* style={styles.tab} */ style={containerStyles2} onPress={() => {
+          focused=2
+          navigation.navigate('Global');
+          
+        }}>
           <Block row middle>
             <Icon
               size={18}
               name="world2x"
               family="NowExtra"
-              style={{ paddingRight: 8 }}
+              style={tabtitle2 }
               color={nowTheme.COLORS.HEADER}
             />
-            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={tabtitle2}>
               {optionRight || 'Global'}
             </Text>
           </Block>
@@ -243,6 +268,31 @@ class Header extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  selectedtab:{
+    color:"white",
+    paddingRight: 8
+  },
+  defaultStyle: {
+    paddingVertical: 15,
+    paddingHorizontal: 14,
+    color: "white"
+  },
+  activeStyle: {
+    //backgroundColor: "#ff7f27",
+    borderRadius: 30,
+    color: "white",
+    width:"50%",
+  },
+  shadow1: {
+    shadowColor: theme.COLORS.BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.1
+  },
+  
   button: {
     padding: 12,
     position: 'relative'
@@ -305,6 +355,7 @@ const styles = StyleSheet.create({
     elevation: 0
   },
   tabTitle: {
+    paddingRight: 8,
     lineHeight: 19,
     fontWeight: '400',
     color: nowTheme.COLORS.HEADER

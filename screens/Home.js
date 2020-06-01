@@ -34,9 +34,12 @@ class Home extends React.Component {
               }}
               style={{ marginRight: theme.SIZES.BASE}}
             >
-              <Text>{this.state.local_total_cases}</Text>
+          
               </Card>
-            {/* <Text>{this.state.local_total_cases}</Text> */}
+          </Block>
+          <Block flex row>
+          
+          
             <Card item={{
                 title: 'Active Cases',
                 image: require("../assets/imgs/active.jpg"),       
