@@ -69,7 +69,7 @@ class MealTimePicker extends React.Component {
   }
 
   handleNotification=(notification)=>{
-    console.log('LOCAL NOTIFICATION ==>', notification);
+    console.log('LOCAL NOTIFICATION mealtime==>', notification);
     this.props.navigation.navigate('HandWash');    
   };
 

@@ -132,6 +132,26 @@ class DrawerItem extends React.Component {
               style={{ opacity: 0.5 }}
             />
             );
+            case "Share App":
+              return (
+                <Icon
+                  name="album"
+                  family="NowExtra"
+                  size={18}
+                  color={focused ? nowTheme.COLORS.PRIMARY : "white"}
+                  style={{ opacity: 0.5 }}
+                />
+              );
+              case "Help":
+            return (
+              <Icon
+                name="atom2x"
+                family="NowExtra"
+                size={18}
+                color={focused ? nowTheme.COLORS.PRIMARY : "white"}
+                style={{ opacity: 0.5 }}
+              />
+            );
       case "LOGOUT":
         return (
           <Icon
@@ -142,26 +162,8 @@ class DrawerItem extends React.Component {
             color={focused ? nowTheme.COLORS.PRIMARY : "white"}
           />
         );
-        case "Share App":
-          return (
-            <Icon
-              name="album"
-              family="NowExtra"
-              size={18}
-              color={focused ? nowTheme.COLORS.PRIMARY : "white"}
-              style={{ opacity: 0.5 }}
-            />
-          );
-          case "Help":
-            return (
-              <Icon
-                name="atom2x"
-                family="NowExtra"
-                size={18}
-                color={focused ? nowTheme.COLORS.PRIMARY : "white"}
-                style={{ opacity: 0.5 }}
-              />
-            );
+        
+          
       default:
         return null;
     }

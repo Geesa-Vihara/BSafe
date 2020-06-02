@@ -53,10 +53,10 @@ class Login extends React.Component {
 }
 
 handleNotification=(notification)=>{
-  console.log('LOCAL NOTIFICATION ==>', notification);
-  if(notification.bigText=="Welcome Home!"||notification.bigText=="Welcome!"||notification.bigText=="It's breakfast time!"||notification.bigText=="It's lunch time!"||notification.bigText=="It's dinner time!"){    
+  console.log('LOCAL NOTIFICATION login==>', notification);
+  if(notification.title=="Welcome Home!"||notification.title=="Welcome!"||notification.title=="It's breakfast time!"||notification.title=="It's lunch time!"||notification.title=="It's dinner time!"){    
     this.props.navigation.navigate('HandWash');  
-  }else if(notification.bigText=="Going Outside!"||notification.bigText=="Finished School!"||notification.bigText=="Finished Uni!"||notification.bigText=="Finished Work!"){
+  }else if(notification.title=="Going Outside!"||notification.title=="Finished School!"||notification.title=="Finished Uni!"||notification.title=="Finished Work!"){
     this.props.navigation.navigate('PutMask');
   }  
 };

@@ -122,7 +122,8 @@ class Visits extends React.Component {
             <Block flex middle>
               <Block style={styles.visitsContainer}>
                 <Block flex space="evenly">
-                    <Block flex={0.1} middle>
+                    <Block flex={0.2} middle style={styles.socialConnect}>
+                    <Block flex={1} middle>
                       <Text
                         style={{
                           fontFamily: 'montserrat-regular',
@@ -133,6 +134,7 @@ class Visits extends React.Component {
                       >
                         Add your frequent visits
                       </Text>
+                      </Block>
                     </Block>
                   <Block flex={0.1}>                  
                     <Text
@@ -146,13 +148,14 @@ class Visits extends React.Component {
                       Set where you are most likely to spend your time!
                     </Text>
                   </Block>
-                      <Picker selectedValue = {this.state.place} onValueChange = {this.setSelectedValue}>
+                  <Block center>
+                      <Picker selectedValue = {this.state.place} onValueChange = {this.setSelectedValue} style={{ width: Dimensions.get("screen").width - theme.SIZES.BASE * 10}}>
                                   <Picker.Item label="Home" value="home" />                                
                                   <Picker.Item label="School" value="school" />                                
                                   <Picker.Item label="University" value="university" />
                                   <Picker.Item label="Workplace" value="workplace" />
                               </Picker>                                                        
-                                                 
+                  </Block>                               
                           <MapView
                             style={{
                             flex: 1

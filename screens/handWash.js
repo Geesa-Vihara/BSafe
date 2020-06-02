@@ -110,6 +110,7 @@ export default class handWash extends React.Component {
             <Block center>
               {this.state.timer===20?
                 <Button
+                  round
                   shadowless
                   style={styles.button}
                   color={nowTheme.COLORS.PRIMARY}
@@ -139,7 +140,7 @@ export default class handWash extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    width: Dimensions.get("screen").width - theme.SIZES.BASE * 4,
+    width: Dimensions.get("screen").width - theme.SIZES.BASE * 10,
     height: theme.SIZES.BASE * 3,
     shadowRadius: 0,
     shadowOpacity: 0,
