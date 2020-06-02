@@ -2,7 +2,6 @@ import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import { TouchableOpacity, StyleSheet, Platform, Dimensions } from 'react-native';
 import { Button, Block, NavBar, Text, theme, Button as GaButton } from 'galio-framework';
-
 import Icon from './Icon';
 import Input from './Input';
 import Tabs from './Tabs';
@@ -13,7 +12,6 @@ var focused =1;
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () =>
   Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
-
 const BellButton = ({ isWhite, style, navigation }) => (
   <TouchableOpacity
     style={[styles.button, style]}
@@ -28,7 +26,6 @@ const BellButton = ({ isWhite, style, navigation }) => (
     <Block middle style={[styles.notify, { backgroundColor: nowTheme.COLORS[isWhite ? 'WHITE' : 'PRIMARY'] }]} />
   </TouchableOpacity>
 );
-
 const BasketButton = ({ isWhite, style, navigation }) => (
   <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Cart')}>
     <Icon
@@ -39,9 +36,6 @@ const BasketButton = ({ isWhite, style, navigation }) => (
     />
   </TouchableOpacity>
 );
-
-
-
 class Header extends React.Component {
   handleLeftPress = () => {
     const { back, navigation } = this.props;
@@ -50,14 +44,12 @@ class Header extends React.Component {
   renderRight = () => {
     const { white, title, navigation } = this.props;
     
-
     if (title === 'Title') {
       return [
         <BellButton key="chat-title" navigation={navigation} isWhite={white} />,
         <BasketButton key="basket-title" navigation={navigation} isWhite={white} />
       ];
     }
-
     switch (title) {
       case 'Home':
         return [
@@ -126,7 +118,8 @@ class Header extends React.Component {
   };
   renderOptions = () => {
     const { navigation, optionLeft, optionRight } = this.props;
-    
+
+
     const containerStyles1 = [
       styles.defaultStyle,
       focused==1? [styles.activeStyle, styles.shadow1] : styles.tab
@@ -145,12 +138,14 @@ class Header extends React.Component {
       <Block row style={styles.options}>
         <Button
           shadowless
+          style={[styles.tab, styles.divider]}
+          onPress={() => navigation.navigate('Dashboard')}
           style={containerStyles1}
-          //style={[styles.tab, styles.divider]}
+        
           onPress={() => {
             focused=1
             navigation.navigate('Dashboard');
-            
+
           }}
         >
           <Block row middle>
@@ -158,27 +153,32 @@ class Header extends React.Component {
               name="single"
               family="NowExtra"
               size={18}
+              //style={{ paddingRight: 8 }}
               style={tabtitle1}
               color={nowTheme.COLORS.HEADER}
             />
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}/>
             <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={tabtitle1}>
               {optionLeft || 'Local'}
             </Text>
           </Block>
         </Button>
+      
         <Button shadowless /* style={styles.tab} */ style={containerStyles2} onPress={() => {
           focused=2
           navigation.navigate('Global');
-          
+
         }}>
           <Block row middle>
             <Icon
               size={18}
               name="world2x"
               family="NowExtra"
+              style={{ paddingRight: 8 }}
               style={tabtitle2 }
               color={nowTheme.COLORS.HEADER}
             />
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}/>
             <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={tabtitle2}>
               {optionRight || 'Global'}
             </Text>
@@ -187,13 +187,11 @@ class Header extends React.Component {
       </Block>
     );
   };
-
+ 
   renderTabs = () => {
     const { tabs, tabIndex, navigation } = this.props;
     const defaultTab = tabs && tabs[0] && tabs[0].id;
-
     if (!tabs) return null;
-
     return (
       <Tabs
         data={tabs || []}
@@ -226,15 +224,12 @@ class Header extends React.Component {
       navigation,
       ...props
     } = this.props;
-
     const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
       transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
-
     const navbarStyles = [styles.navbar, bgColor && { backgroundColor: bgColor }];
-
     return (
       <Block style={headerStyles}>
         <NavBar
@@ -270,16 +265,21 @@ class Header extends React.Component {
 const styles = StyleSheet.create({
   selectedtab:{
     color:"white",
-    paddingRight: 8
+    paddingRight: 8,
+    //paddingVertical: 10,
+    //paddingHorizontal: 14,
   },
   defaultStyle: {
-    paddingVertical: 15,
+    paddingVertical: 20,
     paddingHorizontal: 14,
     color: "white"
   },
   activeStyle: {
     //backgroundColor: "#ff7f27",
-    borderRadius: 30,
+    borderRadius: 25,
+    paddingRight: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     color: "white",
     width:"50%",
   },
@@ -287,12 +287,12 @@ const styles = StyleSheet.create({
     shadowColor: theme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 1
     },
     shadowRadius: 8,
     shadowOpacity: 0.1
   },
-  
+
   button: {
     padding: 12,
     position: 'relative'
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
+    shadowRadius: 5,
     shadowOpacity: 0.2,
     elevation: 3
   },
@@ -351,13 +351,13 @@ const styles = StyleSheet.create({
     width: width * 0.35,
     borderRadius: 0,
     borderWidth: 0,
-    height: 24,
+    height: 22,
     elevation: 0
   },
   tabTitle: {
     paddingRight: 8,
-    lineHeight: 19,
-    fontWeight: '400',
+    lineHeight: 40,
+    fontWeight: '300',
     color: nowTheme.COLORS.HEADER
   },
   social: {
@@ -367,5 +367,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
-
 export default withNavigation(Header);
