@@ -41,9 +41,6 @@ class Register extends React.Component {
     try{
       res = await signUp(this.state);
       if(res){  
-        const token = await Notifications.getExpoPushTokenAsync();
-        console.log(token);
-        await AsyncStorage.setItem("expoPushToken",token);
         await Location.startLocationUpdatesAsync('updateLoc', {
           accuracy: Location.Accuracy.BestForNavigation,
           timeInterval:30000,

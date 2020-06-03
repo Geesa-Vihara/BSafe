@@ -24,7 +24,7 @@ import {InteractionManager} from 'react-native';
 // cache app images
 
 
-import { scan } from "./actions/bluetoothle";
+//import { scan } from "./actions/bluetoothle";
 
 const _setTimeout = global.setTimeout;
 const _clearTimeout = global.clearTimeout;
@@ -142,7 +142,7 @@ export default class App extends React.Component {
       console.warn(e);
     }        
     console.log("app")
-    scan()
+    //scan()
     await Font.loadAsync({ 'montserrat-regular': require('./assets/font/Montserrat-Regular.ttf'), 'montserrat-bold': require('./assets/font/Montserrat-Bold.ttf') } ); this.setState({fontLoaded: true, isLoadingComplete: true});
     this.allPermissions();
     await SplashScreen.hideAsync();
