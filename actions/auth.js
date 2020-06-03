@@ -45,11 +45,11 @@ export const signUp = async function signUp(data) {
                 Matale : 0,
                 Matara : 0,
                 Monaragala : 0,
-                Mullaitivu : 0,
+                Mullaittivu : 0,
                 Nuwara_Eliya : 0,
                 Polonnaruwa : 0,
                 Puttalam : 0,
-                Ratnapura : 0,
+                Rathnapura : 0,
                 Trincomalee : 0,
                 Vavuniya : 0,
 
