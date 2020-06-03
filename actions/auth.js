@@ -2,6 +2,7 @@ import Firebase, {db, provider} from '../config/firebase';
 import { AsyncStorage } from 'react-native';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
+import moment from 'moment';
 
 export const signUp = async function signUp(data) {
     try {
@@ -19,15 +20,44 @@ export const signUp = async function signUp(data) {
                 userId:response.user.uid,
                 count:0,
             }
-            var breakfast = moment({hour:this.state.breakfastHour, minute:this.state.breakfastMinutes}).toISOString();
+            //var breakfast = moment({hour:this.state.breakfastHour, minute:this.state.breakfastMinutes}).toISOString();
             const mealTimes = {
-                breakfast : moment({hour:8, minute:30}).toISOString(),
-                lunch : moment({hour:13, minute:30}).toISOString(),
+                breakfast : moment({hour:8, minute:0}).toISOString(),
+                lunch : moment({hour:13, minute:0}).toISOString(),
                 dinner : moment({hour:20, minute:0}).toISOString(),
+            }
+            const districts = {
+                Ampara : 0,
+                Anuradhapura : 0,
+                Badulla : 0,
+                Batticaloa : 0,
+                Colombo : 0,
+                Galle : 0,
+                Gampaha : 0,
+                Hambantota : 0,
+                Jaffna : 0,
+                Kalutara : 0,
+                Kandy : 0,
+                Kegalle : 0,
+                Kilinochchi : 0,
+                Kurunegala : 0,
+                Mannar : 0,
+                Matale : 0,
+                Matara : 0,
+                Monaragala : 0,
+                Mullaitivu : 0,
+                Nuwara_Eliya : 0,
+                Polonnaruwa : 0,
+                Puttalam : 0,
+                Ratnapura : 0,
+                Trincomalee : 0,
+                Vavuniya : 0,
+
             }
             await db.collection('users').doc(response.user.uid).set(user);
             await db.collection('crowdcount').doc(response.user.uid).set(crowdcount);
             await db.collection('mealTimes').doc(response.user.uid).set(mealTimes);
+            await db.collection('UserDistricts').doc(response.user.uid).set({districts});
             await AsyncStorage.setItem("uid",String(response.user.uid) );    
             
             return true
@@ -97,9 +127,16 @@ export const logout = async function logout() {
                        
             })  
         }     
-        await Location.stopGeofencingAsync("Colombo");         
+        /* await db.collection('districtWise').get().then(function(querySnapshot) {
+            querySnapshot.forEach(async function(doc) {
+                const data=doc.data();
+                const dist=data.district;
+                await Location.stopGeofencingAsync(dist);          
+                
+            });
+          })  */        
         await AsyncStorage.removeItem('uid');
-        await AsyncStorage.removeItem('expoPushToken');
+        //await AsyncStorage.removeItem('expoPushToken');
         return true
     } catch (error) {
         console.log('errortyty',error);
