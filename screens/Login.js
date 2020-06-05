@@ -94,25 +94,25 @@ handleNotification=(notification)=>{
    
   }
 
-  static districtNotification = async(dist) => {  
-    const doc=await db.collection('districtWise').where("district", "==", `${dist}`).get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            console.log(doc.id, " => ", doc.data());
-            const data=doc.data();           
-            PushNotification.localNotificationSchedule({
-              //... You can use all the options from localNotifications
-              title:
-              `Welcome to ${dist} District!`,
-              message: data.cases==0?"⚠️ No cases reported here, but stay on alert ":data.cases!=1?`🚨 ${data.cases} covid-19 cases reported in ${data.district}, be cautious `:`🚨 ${data.cases} covid-19 case reported in ${data.district}, be cautious `, // (required)
-              date: new Date(Date.now() + 1 * 1000), // in 60 secs
-              vibrate: true,
-              vibration: 300,
-            }); 
-        });
-      })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });    
+  static districtNotification = async(dist) => { 
+    try{
+      fetch("https://bsafe-ampersand.herokuapp.com/covid19/srilanka/districts") .then(res => res.json())
+      .then(data => {
+        var cases=data[dist]
+        PushNotification.localNotificationSchedule({
+          //... You can use all the options from localNotifications
+          title:
+          `Welcome to ${dist} District!`,
+          message: cases==0?"⚠️ No cases reported here, but stay on alert ":cases!=1?`🚨 ${cases} covid-19 cases reported in ${dist}, be cautious `:`🚨 ${cases} covid-19 case reported in ${dist}, be cautious `, // (required)
+          date: new Date(Date.now() + 1 * 1000), // in 60 secs
+          vibrate: true,
+          vibration: 300,
+        }); 
+        
+      })   
+    }catch(error){
+      alert(error)
+    }    
   }
 
   static schoolNotification = async() => {  
@@ -520,8 +520,6 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
   console.log('Received new locations', locations[0]);
   const uid=await AsyncStorage.getItem('uid');
   console.log("uid"+uid);
-
-  
   await db.collection('users').doc(uid).update({
     "latitude":locations[0].coords.latitude,
     "longitude":locations[0].coords.longitude
