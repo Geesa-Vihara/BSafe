@@ -49,3 +49,43 @@ function UpdateUserLocation(data,id) {
 function countUpdate(){
     console.log("test count");
 }
+
+
+exports.scheduledFunctionCrontab = functions.pubsub.schedule('59 23 * * *')
+  .timeZone('Asia/Colombo')
+  .onRun((context) => {
+  console.log('Scheduled');
+  admin.firestore().collection('UserDistricts').get().then(async(snapshot) => {
+      await snapshot.docs.forEach(doc =>{
+          doc.update({
+                Ampara: 0,
+                Anuradhapura:0,
+                Badulla:0,
+                Batticaloa:0,
+                Colombo:0,
+                Galle:0,
+                Gampaha:0,
+                Hambantota:0,
+                Jaffna:0,
+                Kalutara:0,
+                Kandy:0,
+                Kegalle:0,
+                Kilinochchi:0,
+                Kurunegala:0,
+                Mannar:0,
+                Matale:0,
+                Matara:0,
+                Monaragala:0,
+                Mullaittivu:0,
+                Nuwara_Eliya:0,
+                Polonnaruwa:0,
+                Puttalam:0,
+                Rathnapura:0,
+                Trincomalee:0,
+                Vavuniya:0
+          })
+      })
+      return true;
+  }).catch((e) => {console.log(e)})
+  return null;
+});
