@@ -36,8 +36,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-ServiceAccountKey.json
-dailyStats.pdf
 # Android/IntelliJ
 #
 build/
