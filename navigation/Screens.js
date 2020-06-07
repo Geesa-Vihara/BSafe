@@ -26,6 +26,7 @@ import putMask from '../screens/putMask';
 import MealTimePicker from '../screens/MealTimePicker'
 import Visits from '../screens/Visits';
 import Global from '../screens/Global';
+import District from '../screens/District';
 import ShareApp from '../screens/ShareApp';
 import Help from '../screens/Help';
 
@@ -314,6 +315,46 @@ function GlobalStack(props) {
   );
 }
 
+function DistrictStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="District"
+        component={District}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Dashboard"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" }
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function MapStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -493,6 +534,7 @@ function AppStack(props) {
     >
       <Drawer.Screen name="Dashboard" component={HomeStack} />
       <Drawer.Screen name="Global" component={GlobalStack} />
+      <Drawer.Screen name="District" component={DistrictStack} />
       <Drawer.Screen name="Map" component={MapStack} />
       <Drawer.Screen name="Your Places" component={VisitsStack} />       
       <Drawer.Screen name="HandWash" component={handWashStack} />      
@@ -533,4 +575,3 @@ export default function OnboardingStack(props) {
     </Stack.Navigator>
   );
 }
-
