@@ -43,8 +43,13 @@ const images = [
 ];
 
 const { width, height } = Dimensions.get('screen');
-var n = 0;
-
+var c_local = 0;
+var c_foreign =0;
+var t_local = 0;
+var t_foreign =0;
+var total_local = 0;
+var total_foreign = 0;
+var HospitalArray = [];
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
 );
@@ -58,7 +63,10 @@ class District extends React.Component {
     total1 :0,
     total2 :0,
     total3 :0,
-   
+    total4 :0,
+    total5 :0,
+    total6 :0,
+    Harray : [],
   }
 
   async newsFetch(id){
@@ -68,11 +76,21 @@ class District extends React.Component {
     .then(res => res.json())
     .then(data => {
   
-        console.log("local newww" + data.data.hospital_data[id-1].cumulative_local);
-        n = n+ data.data.hospital_data[id-1].cumulative_local;
-  
+        console.log("local newww" +  data.data.hospital_data[id-1].hospital.name);
+        c_local = c_local+ data.data.hospital_data[id-1].cumulative_local;
+        c_foreign = c_foreign + data.data.hospital_data[id-1].cumulative_foreign;
+        t_local = t_local + data.data.hospital_data[id-1].treatment_local;
+        total_local = total_local + data.data.hospital_data[id-1].cumulative_total;
+        total_foreign = total_foreign + data.data.hospital_data[id-1].treatment_total;
+        HospitalArray= data.data.hospital_data[id-1].hospital.name;
       this.setState({
-          total1 : n
+          total1 : this.thousands_separators(c_local),
+          total2 : this.thousands_separators(c_foreign),
+          total3 : this.thousands_separators(t_local),
+          total4 : this.thousands_separators(t_foreign),
+          total5 : this.thousands_separators(total_local),
+          total6 : this.thousands_separators(total_foreign),
+          Harray : HospitalArray,
         });
     });
    }
@@ -81,7 +99,12 @@ class District extends React.Component {
   districtHospital(item) {    
 
     this.setState({
-      total1 : 0,
+      total1 :0,
+      total2 :0,
+      total3 :0,
+      total4 :0,
+      total5 :0,
+      total6 :0,
     });
     console.log(item);
      if(item == 4){
@@ -180,14 +203,28 @@ class District extends React.Component {
       selectedDistrict:item,
     
     });
-    n=0;
+    c_local=0;
+    c_foreign=0;
+    t_local=0;
+    t_foreign=0;
+    total_local=0;
+    total_foreign=0;
+    HospitalArray = null;
     this.districtHospital(item);
     
+  }
+  thousands_separators(num)
+  {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
   }
 
   render() {
 
-    const { selectedDistrict } = this.state;
+    // const { selectedDistrict,Harray } = this.state;
+
+   var SSS = [1,2,3,4,5]
     return (
       <ScrollView>  
             <Block >
@@ -195,7 +232,7 @@ class District extends React.Component {
                   <Block flex style={{justifyContent:'center'}} >                  
                     <Text
                       style={{
-                        fontFamily: 'montserrat-regular',
+                        fontFamily: 'montserrat-regular', // HospitalArray: data.data.hospital_data[id-1].hospital.name;
                         textAlign: 'center'
                       }}
                       color="#333"
@@ -248,12 +285,12 @@ class District extends React.Component {
                                     }}
                                   >                                  
                                   </Card>
-                              </Block>
-                              <Block flex row>                                        
+                              {/* </Block>
+                              <Block flex row>                                         */}
                                 <Card item={{
                                     title: 'Cumulative foreign',
                                     image: require("../assets/imgs/active.jpg"),       
-                                    // description: `${this.state.local_active_cases}`
+                                    description: `${this.state.total2}`
                                 }} />
                               </Block>
                               <Block flex row>
@@ -261,14 +298,29 @@ class District extends React.Component {
                                   item={{
                                     title: 'Treatment local',
                                     image: require("../assets/imgs/tcc.jpg"),
-                                    // description: `${this.state.local_new_cases}`
+                                    description: `${this.state.total3}`
                                   }}
                                   style={{ marginRight: theme.SIZES.BASE }}
                                 />
                                 <Card item={{
                                     title: 'Treatment foreign',
                                     image: require("../assets/imgs/ui.jpg"),
-                                    // description: `${this.state.local_total_number_of_individuals_in_hospitals}`
+                                    description: `${this.state.total4}`
+                                }} />
+                              </Block>
+                              <Block flex row>
+                                <Card
+                                  item={{
+                                    title: 'Cumallative total',
+                                    image: require("../assets/imgs/tcc.jpg"),
+                                    description: `${this.state.total5}`
+                                  }}
+                                  style={{ marginRight: theme.SIZES.BASE }}
+                                />
+                                <Card item={{
+                                    title: 'Treatment total',
+                                    image: require("../assets/imgs/ui.jpg"),
+                                    description: `${this.state.total6}`
                                 }} />
                               </Block>
                               <Block flex row>
@@ -282,6 +334,13 @@ class District extends React.Component {
                                 >
                                     Hospital data from :
                                 </Text>
+                                {/* {SSS.map(item => (
+                                <li key={item}>{item}</li> */}
+                                {/* {this.state.Harray.map(function(item, i){
+                                   console.log('test');
+                                    return <li>Test</li>
+                                            })} */}
+                                
                               </Block>       
                             </Block>                           
                           </Block>
