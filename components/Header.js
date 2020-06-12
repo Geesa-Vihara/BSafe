@@ -179,8 +179,8 @@ class Header extends React.Component {
           <Block row middle>
             <Icon
               size={18}
-              name="world2x"
-              family="NowExtra"
+              name="map"
+              family="FontAwesome5 (solid)"
               style={{ paddingRight: 8 }}
               style={tabtitle3 }
               color={nowTheme.COLORS.HEADER}
