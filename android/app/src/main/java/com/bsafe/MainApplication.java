@@ -1,5 +1,7 @@
 package com.bsafe;
 
+import com.bsafe.BluetoothPackage;
+
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
@@ -42,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      packages.add(new BluetoothPackage());
       return packages;
     }
 
