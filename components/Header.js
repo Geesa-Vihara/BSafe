@@ -128,11 +128,18 @@ class Header extends React.Component {
       styles.defaultStyle,
       focused==2 ? [styles.activeStyle, styles.shadow1] : styles.tab
     ];
+    const containerStyles3 = [
+      styles.defaultStyle,
+      focused==3 ? [styles.activeStyle,styles.shadow1]  : styles.tab
+    ];
     const tabtitle1 = [
       focused==1 ? [styles.selectedtab] : styles.tabTitle
     ];
     const tabtitle2 = [
       focused==2 ? [styles.selectedtab] : styles.tabTitle
+    ];
+    const tabtitle3 = [
+      focused==3 ? [styles.selectedtab]  : styles.tabTitle
     ];
     return (
       <Block row style={styles.options}>
@@ -153,7 +160,7 @@ class Header extends React.Component {
               name="single"
               family="NowExtra"
               size={18}
-              //style={{ paddingRight: 8 }}
+              style={{ paddingRight: 8 }}
               style={tabtitle1}
               color={nowTheme.COLORS.HEADER}
             />
@@ -164,6 +171,26 @@ class Header extends React.Component {
           </Block>
         </Button>
       
+        <Button shadowless /* style={styles.tab} */ style={containerStyles3} onPress={() => {
+          focused=3
+          navigation.navigate('District');
+
+        }}>
+          <Block row middle>
+            <Icon
+              size={18}
+              name="map"
+              family="FontAwesome5 (solid)"
+              style={{ paddingRight: 8 }}
+              style={tabtitle3 }
+              color={nowTheme.COLORS.HEADER}
+            />
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}/>
+            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={tabtitle3}>
+              {optionRight || 'District'}
+            </Text>
+          </Block>
+        </Button>
         <Button shadowless /* style={styles.tab} */ style={containerStyles2} onPress={() => {
           focused=2
           navigation.navigate('Global');
@@ -265,14 +292,15 @@ class Header extends React.Component {
 const styles = StyleSheet.create({
   selectedtab:{
     color:"white",
-    paddingRight: 8,
-    //paddingVertical: 10,
-    //paddingHorizontal: 14,
+    // paddingRight: 8,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   defaultStyle: {
     paddingVertical: 20,
-    paddingHorizontal: 14,
-    color: "white"
+    paddingHorizontal: 10,
+    color: "white",
+    width:"30%",
   },
   activeStyle: {
     //backgroundColor: "#ff7f27",
@@ -281,7 +309,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     color: "white",
-    width:"50%",
+    width:"30%",
   },
   shadow1: {
     shadowColor: theme.COLORS.BLACK,
@@ -361,7 +389,7 @@ const styles = StyleSheet.create({
     color: nowTheme.COLORS.HEADER
   },
   social: {
-    width: theme.SIZES.BASE * 3.5,
+    width: theme.SIZES.BASE * 3.0,
     height: theme.SIZES.BASE * 3.5,
     borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: 'center'
