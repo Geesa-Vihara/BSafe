@@ -50,11 +50,13 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "babel-jest": "~25.2.6",
-    "jest": "~25.2.6",
-    "react-test-renderer": "~16.9.0",
     "babel-eslint": "^10.0.3",
-    "babel-preset-expo": "^8.1.0"
+    "babel-jest": "~25.2.6",
+    "babel-preset-expo": "^8.1.0",
+    "eslint": "^7.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "jest": "~25.2.6",
+    "react-test-renderer": "~16.9.0"
   },
   "keywords": [
     "now react native",

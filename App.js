@@ -135,6 +135,7 @@ export default class App extends React.Component {
 
   async nativeFuncCall() {
     Bluetooth.scanBluetoothDevices( (err) => {console.log(err)}, (msg) => {console.log(msg)} );
+    Bluetooth.discoverDevices( (err) => {console.log(err)}, (msg) => {console.log(msg)} );
   }
   
   async componentDidMount() {
