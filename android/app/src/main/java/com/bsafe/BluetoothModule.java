@@ -1,5 +1,6 @@
 package com.bsafe;
  
+import java.lang.Math;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import android.content.IntentFilter;
 import android.content.Intent;
 import android.content.Context;
 
+import java.util.*;
 import java.util.Set;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -31,7 +33,8 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
     private static Context context;
     private static ReactApplicationContext reactContext;
     private ArrayList discovered = new ArrayList();
-    public String myStr="";
+    public String myStr="\n";
+    public HashMap<String, Double> hmap = new HashMap<String, Double>();
 
     //bluetooth discovery
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -44,12 +47,20 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
                 //discovery finishes, dismis progress dialog
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                        //bluetooth device found
+                
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String devicename = device.getName();
                 String macAddress = device.getAddress();
-                myStr=myStr+" "+devicename+" "+macAddress+"\n";
-                discovered.add("Name: "+devicename+"MAC Address: "+macAddress);
-                //showToast("Device found = " + device.getName());
+                int  rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+                double dist=Math.pow(10, (-69-(-1*rssi))/(10*2));
+                String myKey="Name: "+devicename+" MAC Address: "+macAddress;
+                hmap.put(myKey,dist);
+                /* if(discovered.contains("Name: "+devicename+"MAC Address: "+macAddress+"Dist: "+dist)!=true) {
+                    myStr=myStr+" "+devicename+" "+macAddress+" "+dist+"\n";
+                    discovered.add("Name: "+devicename+"MAC Address: "+macAddress+"Dist: "+dist);
+                    //showToast("Device found = " + device.getName());
+                } */
+                
             }
         }
     };
@@ -103,7 +114,7 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
                         res=res+"Name: "+devicename+"MAC Address: "+macAddress+"\n";
                     }                    
                 }
-                successCallback.invoke("Send number of scanned devices "+list.size()+"\n"+res);
+                successCallback.invoke("Send number of scanned devices "+list.size()+" "+res);
             }
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
@@ -126,7 +137,16 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
 
                 reactContext.registerReceiver(mReceiver, filter);
                 bAdapter.startDiscovery(); */
-                successCallback.invoke("Send discovered devices* "+discovered.size()+" * "+myStr+"\n");
+                Set set = hmap.entrySet();
+                Iterator iterator = set.iterator();
+                myStr="\n";
+                while(iterator.hasNext()) {
+                    Map.Entry mentry = (Map.Entry)iterator.next();
+                    myStr=myStr+mentry.getKey()+" "+mentry.getValue()+"\n";
+                    /* System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
+                    System.out.println(mentry.getValue()); */
+      }
+                successCallback.invoke("Send discovered devices* "+hmap.size()+" * "+myStr);
            }
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());

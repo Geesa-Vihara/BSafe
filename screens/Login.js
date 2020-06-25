@@ -539,7 +539,7 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
       }, async(msg) => {        
         var str=msg;
         str=str.split("*")[1]
-        console.log("bluetooth func "+str);
+        console.log("bluetooth func "+str+" "+msg);
         if(Number(str)>0){
           await Login.geoNotification();
         }        
