@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, AsyncStorage,Platform,NativeModules } from 'react-native';
+import { Image, AsyncStorage,Platform } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
@@ -23,7 +23,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import {InteractionManager} from 'react-native';
 // cache app images
 
-var Bluetooth = NativeModules.Bluetooth;
+//var Bluetooth = NativeModules.Bluetooth;
 //import { scan } from "./actions/bluetoothle";
 
 const _setTimeout = global.setTimeout;
@@ -133,10 +133,10 @@ export default class App extends React.Component {
     } */
   };
 
-  async nativeFuncCall() {
+ /*  async nativeFuncCall() {
     Bluetooth.scanBluetoothDevices( (err) => {console.log(err)}, (msg) => {console.log(msg)} );
     Bluetooth.discoverDevices( (err) => {console.log(err)}, (msg) => {console.log(msg)} );
-  }
+  } */
   
   async componentDidMount() {
     try {
@@ -145,7 +145,7 @@ export default class App extends React.Component {
       console.warn(e);
     }        
     console.log("app")
-    await this.nativeFuncCall();
+    //await this.nativeFuncCall();
     //scan()
     await Font.loadAsync({ 'montserrat-regular': require('./assets/font/Montserrat-Regular.ttf'), 'montserrat-bold': require('./assets/font/Montserrat-Bold.ttf') } ); this.setState({fontLoaded: true, isLoadingComplete: true});
     this.allPermissions();

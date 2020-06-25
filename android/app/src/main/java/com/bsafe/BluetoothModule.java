@@ -31,6 +31,7 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
     private static Context context;
     private static ReactApplicationContext reactContext;
     private ArrayList discovered = new ArrayList();
+    public String myStr="";
 
     //bluetooth discovery
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -46,6 +47,7 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String devicename = device.getName();
                 String macAddress = device.getAddress();
+                myStr=myStr+" "+devicename+" "+macAddress+"\n";
                 discovered.add("Name: "+devicename+"MAC Address: "+macAddress);
                 //showToast("Device found = " + device.getName());
             }
@@ -54,7 +56,14 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
 
     public BluetoothModule(ReactApplicationContext reactContext) {
         super(reactContext); //required by React Native
-        this.reactContext = reactContext;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
+        reactContext.registerReceiver(mReceiver, filter);
+        bAdapter.startDiscovery();
+        //this.reactContext = reactContext;
     }
     //bluetooth discovery
     // @Override
@@ -104,21 +113,21 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
     //bluetooth discovery
     @ReactMethod
     public void discoverDevices(Callback errorCallback, Callback successCallback) {
-        try {
+       try {
             if(bAdapter==null){
                 System.out.println("Bluetooth Not Supported");
             }
             else{
-                IntentFilter filter = new IntentFilter();
+                /* IntentFilter filter = new IntentFilter();
 
                 filter.addAction(BluetoothDevice.ACTION_FOUND);
                 filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
                 filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
                 reactContext.registerReceiver(mReceiver, filter);
-                bAdapter.startDiscovery();
-                successCallback.invoke("Send number of discovered devices "+discovered.size());
-            }
+                bAdapter.startDiscovery(); */
+                successCallback.invoke("Send discovered devices* "+discovered.size()+" * "+myStr+"\n");
+           }
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }

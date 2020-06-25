@@ -9,7 +9,8 @@ import {
   AsyncStorage,
   Vibration,
   Alert,
-  Image
+  Image,
+  NativeModules
 } from 'react-native';
 import { Block, Checkbox, Text, Button as GaButton, theme } from 'galio-framework';
 import * as TaskManager from 'expo-task-manager';
@@ -23,7 +24,7 @@ import Firebase from "../config/firebase"
 import { login, getAuthState, signInGoogle } from "../actions/auth.js";
 import PushNotification from 'react-native-push-notification'
 
-
+var Bluetooth = NativeModules.Bluetooth;
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
@@ -531,6 +532,18 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
     if(data && data['count']>0){
       await Login.geoNotification();      
     
+    }else{
+      Bluetooth.discoverDevices( async(err) => 
+      {
+        console.log(err)
+      }, async(msg) => {        
+        var str=msg;
+        str=str.split("*")[1]
+        console.log("bluetooth func "+str);
+        if(Number(str)>0){
+          await Login.geoNotification();
+        }        
+      });
     }
   })
 

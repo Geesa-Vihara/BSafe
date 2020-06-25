@@ -22,10 +22,10 @@ import java.util.ArrayList;
 public class MainActivity extends ReactActivity {
 
     //bluetooth discovery
-    private BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();
-    private ArrayList discovered = new ArrayList();
+    /* private BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();
+    private ArrayList discovered = new ArrayList(); */
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    /* private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
@@ -43,7 +43,7 @@ public class MainActivity extends ReactActivity {
                 System.out.printf("Device found = " + device.getName());
             }
         }
-    };
+    }; */
     //
 
   @Override
@@ -55,14 +55,14 @@ public class MainActivity extends ReactActivity {
 
 
     //bluetooth discovery
-    IntentFilter filter = new IntentFilter();
+    /* IntentFilter filter = new IntentFilter();
 
     filter.addAction(BluetoothDevice.ACTION_FOUND);
     filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
     filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
     registerReceiver(mReceiver, filter);
-    bAdapter.startDiscovery();
+    bAdapter.startDiscovery(); */
     //
 
   }
