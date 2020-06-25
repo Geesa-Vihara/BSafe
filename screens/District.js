@@ -78,8 +78,8 @@ class District extends React.Component {
     .then(res => res.json())
     .then(data => {
   
-        console.log("local newww" +  data.data.hospital_data[id-1].hospital.name);
-        console.log("vvvv"+HospitalArray);
+        //console.log("local newww" +  data.data.hospital_data[id-1].hospital.name);
+        //console.log("vvvv"+HospitalArray);
         c_local = c_local+ data.data.hospital_data[id-1].cumulative_local;
         c_foreign = c_foreign + data.data.hospital_data[id-1].cumulative_foreign;
         t_local = t_local + data.data.hospital_data[id-1].treatment_local;
@@ -115,7 +115,7 @@ class District extends React.Component {
       Harray:[]
     
     });
-    console.log(item);
+    //console.log(item);
      if(item == 4){
             this.newsFetch(1);
             this.newsFetch(2);

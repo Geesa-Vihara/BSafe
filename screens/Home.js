@@ -95,11 +95,11 @@ class Home extends React.Component {
     .then(res => res.json())
     .then(data => {
 
-      console.log("local total cases = "+JSON.stringify(data.data.local_total_cases));
+      /* console.log("local total cases = "+JSON.stringify(data.data.local_total_cases));
       console.log("global total cases = "+data.data.global_total_cases);
       console.log("local deaths = "+data.data.local_deaths);
       console.log("local new cases = "+data.data.local_new_cases);
-      console.log("local recovered cases = "+data.data.local_recovered);
+      console.log("local recovered cases = "+data.data.local_recovered); */
   
         this.setState({
           local_total_cases: this.thousands_separators(data.data.local_total_cases),
@@ -113,13 +113,13 @@ class Home extends React.Component {
           
           });
       });
-      console.log("blaaaa "+this.state.local_total_cases);
-      console.log("haaaa "+this.state.local_deaths);
+      /* console.log("blaaaa "+this.state.local_total_cases);
+      console.log("haaaa "+this.state.local_deaths); */
      }
   
   
     async componentDidMount() {     
-      console.log("app test")
+     /*  console.log("app test") */
     
       this.newsFetch();
     }

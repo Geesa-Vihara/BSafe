@@ -100,7 +100,7 @@ class Global extends React.Component {
     .then(data => {
 
   
-    console.log("global total cases = "+data.data.global_total_cases);
+    //console.log("global total cases = "+data.data.global_total_cases);
 
    
 
@@ -115,13 +115,13 @@ class Global extends React.Component {
         
         });
     });
-    console.log("blaaaa "+this.state.local_total_cases);
-    console.log("haaaa "+this.state.local_deaths);
+    /* console.log("blaaaa "+this.state.local_total_cases);
+    console.log("haaaa "+this.state.local_deaths); */
    }
 
 
   async componentDidMount() {     
-    console.log("app test")
+    //console.log("app test")
   
     this.newsFetch();
   }
