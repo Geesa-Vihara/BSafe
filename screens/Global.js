@@ -31,7 +31,7 @@ class Global extends React.Component {
                 image: require("../assets/imgs/ac.jpg"),
                 description: `${this.state.global_total_cases}`
               }}
-              style={{ marginRight: theme.SIZES.BASE}}
+              //style={{ marginRight: theme.SIZES.BASE}}
             >
               </Card>
              
@@ -44,7 +44,7 @@ class Global extends React.Component {
                 image: require("../assets/imgs/tcc.jpg"),
                 description: `${this.state.global_new_cases}`
               }}
-              style={{ marginRight: theme.SIZES.BASE }}
+              //style={{ marginRight: theme.SIZES.BASE }}
             />
           </Block>
         
@@ -55,7 +55,7 @@ class Global extends React.Component {
                 image: require("../assets/imgs/rec.jpg"),
                 description: `${this.state.global_recovered}`
               }}
-              style={{ marginRight: theme.SIZES.BASE }}
+              //style={{ marginRight: theme.SIZES.BASE }}
             />
          
           </Block>

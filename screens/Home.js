@@ -34,7 +34,7 @@ class Home extends React.Component {
                 image: require("../assets/imgs/ac.jpg"),
                 description: `${this.state.local_total_cases}`
               }}
-              style={{ marginRight: theme.SIZES.BASE}}
+              //style={{ marginRight: theme.SIZES.BASE}}
             >
               <Text>{this.state.local_total_cases}</Text>
               </Card>

@@ -1,8 +1,10 @@
 import Firebase, {db, provider} from '../config/firebase';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage,NativeModules } from 'react-native';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import moment from 'moment';
+
+var Bluetooth = NativeModules.Bluetooth;
 
 export const signUp = async function signUp(data) {
     try {
@@ -111,7 +113,7 @@ export const signInGoogle = async function signInGoogle() {
 
 export const logout = async function logout() {
     try {
-        
+        await Bluetooth.stopDiscoverDevices(async(err) =>{console.log(err);}, async(msg) => {console.log(msg);});        
         await Location.stopLocationUpdatesAsync('updateLoc');
         const response = await Firebase.auth().signOut()
         const uid=await AsyncStorage.getItem('uid');
