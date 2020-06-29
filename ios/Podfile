@@ -44,4 +44,6 @@ target 'BSafe' do
   # react-native-cli autolinking
   use_native_modules!
 
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
 end
