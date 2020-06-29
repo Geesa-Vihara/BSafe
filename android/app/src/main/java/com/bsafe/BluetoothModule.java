@@ -54,7 +54,7 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
                 double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 double dist=Math.pow(10, (-69-(-1*rssi))/(10*2));
                 String myKey="Name: "+devicename+" MAC Address: "+macAddress;
-                //if(rssi >= -80 && rssi <= -50) {
+                //if(rssi >= -45 && rssi <= -50) {
                     hmap.put(myKey,rssi);
                 //}
                 /* if(discovered.contains("Name: "+devicename+"MAC Address: "+macAddress+"Dist: "+dist)!=true) {
@@ -73,12 +73,8 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
         filter.addAction(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
+        hmap.clear();
         reactContext.registerReceiver(mReceiver, filter);
-        if (bAdapter.isDiscovering()){
-            bAdapter.cancelDiscovery();
-        }
-        bAdapter.startDiscovery();
         //this.reactContext = reactContext;
     }
     //bluetooth discovery
@@ -134,6 +130,10 @@ public class BluetoothModule  extends ReactContextBaseJavaModule  {
                 System.out.println("Bluetooth Not Supported");
             }
             else{
+                if (bAdapter.isDiscovering()){
+                    bAdapter.cancelDiscovery();
+                }                
+                bAdapter.startDiscovery();                
                 /* IntentFilter filter = new IntentFilter();
 
                 filter.addAction(BluetoothDevice.ACTION_FOUND);
