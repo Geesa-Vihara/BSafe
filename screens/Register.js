@@ -41,7 +41,7 @@ class Register extends React.Component {
     try{
       res = await signUp(this.state);
       if(res){  
-        await Location.startLocationUpdatesAsync('updateLoc', {
+        /* await Location.startLocationUpdatesAsync('updateLoc', {
           accuracy: Location.Accuracy.BestForNavigation,
           timeInterval:30000,
           foregroundService: { 
@@ -49,7 +49,7 @@ class Register extends React.Component {
             notificationBody: ' enabled',
             notificationColor: '#FF7F27' 
           }
-          });        
+          }); */        
         console.log("res"+res);
     }
     }

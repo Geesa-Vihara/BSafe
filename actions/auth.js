@@ -3,6 +3,7 @@ import { AsyncStorage,NativeModules } from 'react-native';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import moment from 'moment';
+import {stopTimer} from '../actions/myTimer';
 
 var Bluetooth = NativeModules.Bluetooth;
 
@@ -113,8 +114,9 @@ export const signInGoogle = async function signInGoogle() {
 
 export const logout = async function logout() {
     try {
+        stopTimer();
         await Bluetooth.stopDiscoverDevices(async(err) =>{console.log(err);}, async(msg) => {console.log(msg);});        
-        await Location.stopLocationUpdatesAsync('updateLoc');
+        //await Location.stopLocationUpdatesAsync('updateLoc');
         const response = await Firebase.auth().signOut()
         const uid=await AsyncStorage.getItem('uid');
         const doc=await db.collection('crowdcount').doc(uid).get();

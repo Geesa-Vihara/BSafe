@@ -23,6 +23,7 @@ const { width, height } = Dimensions.get('screen');
 import Firebase from "../config/firebase"
 import { login, getAuthState, signInGoogle } from "../actions/auth.js";
 import PushNotification from 'react-native-push-notification'
+import {startTimer} from '../actions/myTimer';
 
 var Bluetooth = NativeModules.Bluetooth;
 
@@ -217,10 +218,11 @@ handleNotification=(notification)=>{
 
   handleSubmitLogin = async() => {
     console.log('state',this.state);
+    startTimer();
     var status=false;
     status=await login(this.state);
     if(status){ 
-      await Location.startLocationUpdatesAsync('updateLoc', {
+      /* await Location.startLocationUpdatesAsync('updateLoc', {
         accuracy: Location.Accuracy.BestForNavigation,
         timeInterval:30000,
         foregroundService: { 
@@ -228,7 +230,7 @@ handleNotification=(notification)=>{
           notificationBody: ' enabled',
           notificationColor: '#FF7F27' 
         }
-      });
+      }); */
       const uid=await AsyncStorage.getItem('uid');
       const doc=await db.collection('crowdcount').doc(uid).get();
       const data=doc.data();          
@@ -288,7 +290,8 @@ handleNotification=(notification)=>{
       Firebase.auth().onAuthStateChanged(async(user) => {
 
         if (user) {
-          //await TaskManager.unregisterAllTasksAsync()       
+          await TaskManager.unregisterAllTasksAsync()
+          startTimer();
           const tasks=await TaskManager.getRegisteredTasksAsync();
           console.log("tasksCDM",JSON.stringify(tasks));
           this.setState({password:""})
