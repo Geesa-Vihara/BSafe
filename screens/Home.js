@@ -74,13 +74,27 @@ class Home extends React.Component {
               }}
               style={{ marginRight: theme.SIZES.BASE }}
             />
+            {/* <Card item={{
+                 title: 'Deaths',
+                 image: require("../assets/imgs/dead.jpg"),
+                 description: `${this.state.local_deaths}`
+            }} /> */}
+          </Block>
+          <Block flex row>
+            {/* <Card
+              item={{
+                title: 'Recovered',
+                image: require("../assets/imgs/rec.jpg"),
+                description: `${this.state.local_recovered}`
+              }}
+              style={{ marginRight: theme.SIZES.BASE }}
+            /> */}
             <Card item={{
                  title: 'Deaths',
                  image: require("../assets/imgs/dead.jpg"),
                  description: `${this.state.local_deaths}`
             }} />
           </Block>
-       
         </Block>
       </ScrollView>
     );

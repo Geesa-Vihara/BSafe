@@ -60,7 +60,7 @@ export const signUp = async function signUp(data) {
             await db.collection('users').doc(response.user.uid).set(user);
             await db.collection('crowdcount').doc(response.user.uid).set(crowdcount);
             await db.collection('mealTimes').doc(response.user.uid).set(mealTimes);
-            await db.collection('UserDistricts').doc(response.user.uid).set({districts});
+            await db.collection('UserDistricts').doc(response.user.uid).set(districts);
             await AsyncStorage.setItem("uid",String(response.user.uid) );    
             
             return true
@@ -114,9 +114,9 @@ export const signInGoogle = async function signInGoogle() {
 
 export const logout = async function logout() {
     try {
-        stopTimer();
-        await Bluetooth.stopDiscoverDevices(async(err) =>{console.log(err);}, async(msg) => {console.log(msg);});        
-        //await Location.stopLocationUpdatesAsync('updateLoc');
+        //stopTimer();
+        //await Bluetooth.stopDiscoverDevices(async(err) =>{console.log(err);}, async(msg) => {console.log(msg);});        
+        await Location.stopLocationUpdatesAsync('updateLoc');
         const response = await Firebase.auth().signOut()
         const uid=await AsyncStorage.getItem('uid');
         const doc=await db.collection('crowdcount').doc(uid).get();

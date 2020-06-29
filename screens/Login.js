@@ -218,11 +218,11 @@ handleNotification=(notification)=>{
 
   handleSubmitLogin = async() => {
     console.log('state',this.state);
-    startTimer();
+    //startTimer();
     var status=false;
     status=await login(this.state);
     if(status){ 
-      /* await Location.startLocationUpdatesAsync('updateLoc', {
+      await Location.startLocationUpdatesAsync('updateLoc', {
         accuracy: Location.Accuracy.BestForNavigation,
         timeInterval:30000,
         foregroundService: { 
@@ -230,7 +230,7 @@ handleNotification=(notification)=>{
           notificationBody: ' enabled',
           notificationColor: '#FF7F27' 
         }
-      }); */
+      }); 
       const uid=await AsyncStorage.getItem('uid');
       const doc=await db.collection('crowdcount').doc(uid).get();
       const data=doc.data();          
@@ -290,8 +290,8 @@ handleNotification=(notification)=>{
       Firebase.auth().onAuthStateChanged(async(user) => {
 
         if (user) {
-          await TaskManager.unregisterAllTasksAsync()
-          startTimer();
+          //await TaskManager.unregisterAllTasksAsync()
+          //startTimer();
           const tasks=await TaskManager.getRegisteredTasksAsync();
           console.log("tasksCDM",JSON.stringify(tasks));
           this.setState({password:""})
@@ -326,10 +326,27 @@ handleNotification=(notification)=>{
             imageStyle={styles.imageBackground}
           >
             <Block flex middle>
+            <Block flex={1} row  space="between" style={{ marginTop:80,  }}>
+              <Image source = {require('../assets/bsafe.png')} style = {{ width: 150, height: 150 }}/>
+            </Block>
               <Block style={styles.loginContainer}>
+                <Text
+                  style={{
+                    fontFamily: 'montserrat-regular',
+                    textAlign: 'center',
+                    paddingTop: 10,
+                    paddingBottom:20,
+                    fontWeight:"bold"
+                  }}
+                  color="#FF7F27"
+                  size={24}
+                  >
+                  BSafe
+                </Text> 
                 <Block flex space="evenly">
-                  <Block flex={0.4} middle style={styles.socialConnect}>
-                      <Text
+                  
+                  {/*<Block flex={0.1} middle style={styles.socialConnect}>
+                       <Text
                         style={{
                           fontFamily: 'montserrat-regular',
                           textAlign: 'center',
@@ -340,14 +357,11 @@ handleNotification=(notification)=>{
                         size={24}
                       >
                         BSafe
-                      </Text>
+                      </Text> 
 
-                    <Block flex={0.5} row middle space="between" style={{ marginTop:18, marginBottom: 28 }}>
-                      <Image source = {require('../assets/bsafe.png')} style = {{ width: 80, height: 80 }}/>
-
-                    </Block>
-                  </Block>
-                  <Block flex={0.1} middle>
+                    
+                  </Block>*/}
+                  {/* <Block flex={0.1} middle>
                     <Text
                       style={{
                         fontFamily: 'montserrat-regular',
@@ -358,7 +372,7 @@ handleNotification=(notification)=>{
                     >
                       Login
                     </Text>
-                  </Block>
+                  </Block> */}
                   <Block flex={1} middle space="between">
                     <Block center flex={0.9}>
                       <Block flex space="between">
@@ -536,7 +550,7 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
       await Login.geoNotification();      
     
     }else{
-      Bluetooth.discoverDevices( async(err) => 
+      /* Bluetooth.discoverDevices( async(err) => 
       {
         console.log(err)
       }, async(msg) => {        
@@ -546,7 +560,7 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
         if(Number(str)>0){
           await Login.geoNotification();
         }        
-      });
+      }); */
     }
   })
 
@@ -575,386 +589,386 @@ TaskManager.defineTask('updateLoc', async({ data, error }) => {
           var district=resJson.Response.View[0].Result[0].Location.Address.County;
           const distDoc=await db.collection('UserDistricts').doc(uid).get();
           const distData=distDoc.data();
-          if(distData.districts.Ampara==0 && district=="Ampara"){
+          if(distData.Ampara==0 && district=="Ampara"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];      
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];      
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district);   
 
-          }else if(distData.districts.Anuradhapura==0 && district=="Anuradhapura"){ 
+        }else if(distData.Anuradhapura==0 && district=="Anuradhapura"){ 
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district);   
-          }else if(distData.districts.Badulla==0 && district=="Badulla"){   
+        }else if(distData.Badulla==0 && district=="Badulla"){   
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district);    
-          }else if(distData.districts.Batticaloa==0 && district=="Batticaloa"){
+        }else if(distData.Batticaloa==0 && district=="Batticaloa"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district);   
-          }else if(distData.districts.Colombo==0 && district=="Colombo"){
+        }else if(distData.Colombo==0 && district=="Colombo"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];      
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];      
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Galle==0 && district=="Galle"){
+        }else if(distData.Galle==0 && district=="Galle"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Gampaha==0 && district=="Gampaha"){
+        }else if(distData.Gampaha==0 && district=="Gampaha"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Hambantota==0 && district=="Hambantota"){
+        }else if(distData.Hambantota==0 && district=="Hambantota"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Jaffna==0 && district=="Jaffna"){
+        }else if(distData.Jaffna==0 && district=="Jaffna"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Kalutara==0 && district=="Kalutara"){
+        }else if(distData.Kalutara==0 && district=="Kalutara"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Kandy==0 && district=="Kandy"){
+        }else if(distData.Kandy==0 && district=="Kandy"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Kegalle==0 && district=="Kegalle"){
+        }else if(distData.Kegalle==0 && district=="Kegalle"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Kilinochchi==0 && district=="Kilinochchi"){
+        }else if(distData.Kilinochchi==0 && district=="Kilinochchi"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Kurunegala==0 && district=="Kurunegala"){
+        }else if(distData.Kurunegala==0 && district=="Kurunegala"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Mannar==0 && district=="Mannar"){
+        }else if(distData.Mannar==0 && district=="Mannar"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Matale==0 && district=="Matale"){
+        }else if(distData.Matale==0 && district=="Matale"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Matara==0 && district=="Matara"){
+        }else if(distData.Matara==0 && district=="Matara"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Monaragala==0 && district=="Monaragala"){
+        }else if(distData.Monaragala==0 && district=="Monaragala"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Mullaittivu==0 && district=="Mullaittivu"){
+        }else if(distData.Mullaittivu==0 && district=="Mullaittivu"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const currDist=district.replace(" ","_");
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const currDist=district.replace(" ","_");
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Nuwara_Eliya==0 && district=="Nuwara Eliya"){
+        }else if(distData.Nuwara_Eliya==0 && district=="Nuwara Eliya"){
             const currDist=district.replace(" ","_");    
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }
+            }
                 
                 
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Polonnaruwa==0 && district=="Polonnaruwa"){
+        }else if(distData.Polonnaruwa==0 && district=="Polonnaruwa"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Puttalam==0 && district=="Puttalam"){
+        }else if(distData.Puttalam==0 && district=="Puttalam"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Rathnapura==0 && district=="Rathnapura"){
+        }else if(distData.Rathnapura==0 && district=="Rathnapura"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Trincomalee==0 && district=="Trincomalee"){
+        }else if(distData.Trincomalee==0 && district=="Trincomalee"){
             const currDist=district
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }else if(distData.districts.Vavuniya==0 && district=="Vavuniya"){
+        }else if(distData.Vavuniya==0 && district=="Vavuniya"){
             const currDist=district;
-            Object.keys(distData.districts).map(async(dist,index) => { 
-              const caseCount=distData["districts"][dist];
-              const distToUpd=`districts.${dist}`
-              if(dist==currDist){
+            Object.keys(distData).map(async(dist,index) => { 
+            const caseCount=distData[dist];
+            const distToUpd=`${dist}`
+            if(dist==currDist){
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,1);
-              }
-              else if(caseCount==1){
-                      
+            }
+            else if(caseCount==1){
+                    
                 await db.collection('UserDistricts').doc(uid).update(distToUpd,0);
                 
-              }     
+            }     
             })
             await Login.districtNotification(district); 
-          }
+        }
         }
     })
     .catch((e) => {

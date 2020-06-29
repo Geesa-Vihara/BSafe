@@ -320,6 +320,8 @@ class District extends React.Component {
                                     description: `${this.state.total4}`
                                 }} />
                               </Block>
+                              <Text>{'\t\t'}</Text>
+                              
                               {/* <Block flex row>
                                 <Card
                                   item={{
@@ -335,9 +337,9 @@ class District extends React.Component {
                                     description: `${this.state.total6}`
                                 }} />
                               </Block> */}
-                              <Block flex row style={{marginTop:20,marginBottom:20}} >                               
+                              <Block flex row  >                               
                               <Text style={{fontWeight:"bold"}}>Hospital data from {'\t'}</Text>                               
-                                  <Block  >
+                                  <Block >
                                   {this.state.Harray.map(function(item){                                
                                     return  (
                                       <View style={{flexDirection: 'row'}}>
@@ -347,7 +349,8 @@ class District extends React.Component {
                                     );
                                   })}
                                   </Block>
-                              </Block>       
+                              </Block> 
+                              <Text>{'\t\t'}</Text>      
                             </Block>                           
                           </Block>
                         </Block>

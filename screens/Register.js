@@ -71,61 +71,26 @@ class Register extends React.Component {
             imageStyle={styles.imageBackground}
           >
             <Block flex middle>
+            <Block flex={1} row middle space="between" style={{ marginTop: 120 }}>
+              <Image source = {require('../assets/bsafe.png')} style = {{ width: 150, height: 150 }}/>                     
+            </Block>
               <Block style={styles.registerContainer}>
-                <Block flex space="evenly">
-                  <Block flex={0.4} middle style={styles.socialConnect}>
-                    <Block flex={0.5} middle>
                       <Text
                         style={{
                           fontFamily: 'montserrat-regular',
-                          textAlign: 'center'
+                          textAlign: 'center',
+                          fontWeight:"bold",
+                          //paddingTop: 10,
+                          paddingBottom:20,
                         }}
                         color="#FF7F27"
                         size={24}
                       >
                         BSafe
                       </Text>
-                    </Block>
-
-                    <Block flex={0.5} row middle space="between" style={{ marginBottom: 18 }}>
-                      <Image source = {require('../assets/bsafe.png')} style = {{ width: 80, height: 80 }}/>
-                      {/* <GaButton
-                        round
-                        onlyIcon
-                        shadowless
-                        icon="twitter"
-                        iconFamily="Font-Awesome"
-                        iconColor={theme.COLORS.WHITE}
-                        iconSize={theme.SIZES.BASE * 1.625}
-                        color={nowTheme.COLORS.TWITTER}
-                        style={[styles.social, styles.shadow]}
-                      />
-
-                      <GaButton
-                        round
-                        onlyIcon
-                        shadowless
-                        icon="google"
-                        iconFamily="Font-Awesome"
-                        iconColor={theme.COLORS.WHITE}
-                        iconSize={theme.SIZES.BASE * 1.625}
-                        color={nowTheme.COLORS.GOOGLE}
-                        style={[styles.social, styles.shadow]}
-                      />
-                      <GaButton
-                        round
-                        onlyIcon
-                        shadowless
-                        icon="facebook"
-                        iconFamily="Font-Awesome"
-                        iconColor={theme.COLORS.WHITE}
-                        iconSize={theme.SIZES.BASE * 1.625}
-                        color={nowTheme.COLORS.FACEBOOK}
-                        style={[styles.social, styles.shadow]}
-                      /> */}
-                    </Block>
-                  </Block>
-                  <Block flex={0.1} middle>
+                <Block flex space="evenly">
+                 
+                  {/* <Block flex={0.1} middle>
                     <Text
                       style={{
                         fontFamily: 'montserrat-regular',
@@ -136,12 +101,12 @@ class Register extends React.Component {
                     >
                       Register
                     </Text>
-                  </Block>
+                  </Block> */}
                   <Block flex={1} middle space="between">
-                    <Block center flex={0.9}>
+                    <Block center flex={0.8}>
                       <Block flex space="between">
                         <Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block width={width * 0.8} >
                             <Input
                               placeholder="Full Name"
                               style={styles.inputs}
@@ -173,7 +138,7 @@ class Register extends React.Component {
                               }
                             />
                           </Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block width={width * 0.8}>
                             <Input
                               password
                               placeholder="Password"
@@ -190,25 +155,7 @@ class Register extends React.Component {
                               }
                             />
                           </Block>
-                          {/* <Block
-                            style={{ marginVertical: theme.SIZES.BASE, marginLeft: 15}}
-                            row
-                            width={width * 0.75}
-                          >
-                            <Checkbox
-                              checkboxStyle={{
-                                borderWidth: 1,
-                                borderRadius: 2,
-                                borderColor: '#E3E3E3'
-                              }}
-                              color={nowTheme.COLORS.PRIMARY}
-                              labelStyle={{
-                                color: nowTheme.COLORS.HEADER,
-                                fontFamily: 'montserrat-regular'
-                              }}
-                              label="I agree to the terms and conditions."
-                            />
-                          </Block> */}
+                          
                         </Block>
                         <Block center>
                           <Button round style={styles.createButton} onPress={this.handleSubmit}>
@@ -249,7 +196,8 @@ const styles = StyleSheet.create({
     marginTop: 55,
     marginBottom: 55,
     width: width * 0.9,
-    height: height < 812 ? height * 0.8 : height * 0.8,
+    height:450,
+    //height: height < 812 ? height * 0.8 : height * 0.8,
     backgroundColor: nowTheme.COLORS.WHITE,
     borderRadius: 4,
     shadowColor: nowTheme.COLORS.BLACK,
