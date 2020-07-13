@@ -38,10 +38,10 @@
     <td>Proper way to wear a mask</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture6.PNG" width=270 height=480></td>
-    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture99.PNG" width=270 height=480></td>
-     <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture7.PNG" width=270 height=480></td>
-    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture8.PNG" width=270 height=480></td>
+    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture6.PNG" width=270 height=460></td>
+    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture99.PNG" width=270 height=460></td>
+     <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture7.PNG" width=270 height=460></td>
+    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture8.PNG" width=270 height=460></td>
   </tr>
  </table>
  
@@ -53,7 +53,7 @@
    
   </tr>
   <tr>
-    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture89.PNG" width=270 height=500></td>
+    <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/89.PNG" width=270 height=500></td>
     <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture77.PNG" width=270 height=500></td>
    
   </tr>
