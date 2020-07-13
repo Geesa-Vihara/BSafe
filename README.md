@@ -7,7 +7,7 @@
   <tr>
     <td>Login</td>
      <td>Dashboard</td>
-     <td>Case count notification</td>
+     <td>Location-wise case count notification</td>
   </tr>
   <tr>
     <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture2.PNG" width=270 height=500></td>
@@ -18,9 +18,9 @@
  <br>
  <table>
   <tr>
-    <td>Meal time picker</td>
-     <td>Hand washing steps</td>
-    <td>Frequently visiting places</td>
+    <td>Set mealtimes/Notification to wash your hands</td>
+     <td>Proper way to wash your hands</td>
+    <td>Set frequently visiting places</td>
   </tr>
   <tr>
     <td><img src="https://github.com/Geesa-Vihara/BSafe/blob/master/assets/Capture5.PNG" width=270 height=500></td>
@@ -33,7 +33,7 @@
 
 <table>
   <tr>    
-     <td>Map to mark</td>
+     <td>Frequently visiting places</td>
     <td>Notification to wear a mask</td>
     <td>Proper way to wear a mask</td>
   </tr>
